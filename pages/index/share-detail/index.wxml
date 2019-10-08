@@ -2,6 +2,10 @@
 <wxs module="f" src="../../../utils/format.wxs"></wxs>
 
 <view>
+  <view class="full-width">
+    <mq-share-search catchchooseShare="onShareChosen"/>
+  </view>
+  
   <view class="top-basic">
     <view class="top-basic-name">
       <text class="name">{{ shareName }}</text>

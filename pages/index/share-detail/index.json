@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "个股详情",
-  "usingComponents": {}
+  "usingComponents": {
+    "mq-share-search": "../../components/mq/share-search/index"
+  }
 }
