@@ -1,0 +1,16 @@
+.mq-table {
+  width: 100%;
+  text-align: center
+}
+
+.mq-table-header {
+  color: #777;
+}
+
+.mq-table-row {
+  border-bottom: 1rpx solid #e9eaec;
+}
+
+.mq-table-row-0 {
+  background-color: #f8f8f9;
+}

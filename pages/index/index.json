@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "mq-increase-list": "../../components/mq/increase-list/index",
+    "mq-share-search": "../../components/mq/share-search/index"
+  }
+}

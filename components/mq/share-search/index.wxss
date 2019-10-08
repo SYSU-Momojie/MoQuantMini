@@ -1,0 +1,7 @@
+/* components/mq/share-search/index.wxss */
+
+.hint {
+  position: absolute;
+  top: 90rpx;
+  width: 100%;
+}

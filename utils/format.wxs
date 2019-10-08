@@ -1,0 +1,21 @@
+var percent = function(num) {
+  if (num === undefined || num === null) {
+    return '-'
+  } else {
+    num = num * 100;
+    return num.toFixed(2) + '%';
+  }
+}
+
+var trunc = function (num) {
+  if (num === undefined || num === null) {
+    return '-'
+  } else {
+    return num.toFixed(2);
+  }
+}
+
+module.exports = {
+  percent: percent,
+  trunc: trunc
+};
