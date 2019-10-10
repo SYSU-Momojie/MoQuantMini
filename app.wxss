@@ -15,3 +15,7 @@
 .relative {
   position: relative;
 }
+
+.search-part {
+  margin-bottom: 30rpx;
+}

@@ -2,35 +2,35 @@
 <wxs module="f" src="../../../utils/format.wxs"></wxs>
 
 <view class="mq-table">
-  <i-spin fix wx:if="{{ spinShow }}"></i-spin>
+  <van-loading type="spinner" wx:if="{{ spinShow }}"/>
 
-  <i-row i-class="mq-table-header mq-table-row">
-      <i-col span="{{ 24 / fixedColNum }}" i-class="col-header-height">#</i-col>
-      <i-col span="{{ 24 / fixedColNum }}" i-class="col-header-height">PE</i-col>
-      <i-col span="{{ 24 / fixedColNum }}" data-order="g" catchtap="orderChanged" i-class="col-header-height {{ orderBy == 'g' ? 'focus' : '' }}">增速</i-col>
-      <i-col span="{{ 24 / fixedColNum }}" data-order="peg" catchtap="orderChanged" i-class="col-header-height {{ orderBy == 'peg' ? 'focus' : '' }}">PEG</i-col>
-  </i-row>
+  <van-row i-class="mq-table-header mq-table-row">
+      <van-col span="{{ 24 / fixedColNum }}" i-class="col-header-height">#</van-col>
+      <van-col span="{{ 24 / fixedColNum }}" i-class="col-header-height">PE</van-col>
+      <van-col span="{{ 24 / fixedColNum }}" data-order="g" catchtap="orderChanged" i-class="col-header-height {{ orderBy == 'g' ? 'focus' : '' }}">增速</van-col>
+      <van-col span="{{ 24 / fixedColNum }}" data-order="peg" catchtap="orderChanged" i-class="col-header-height {{ orderBy == 'peg' ? 'focus' : '' }}">PEG</van-col>
+  </van-row>
 
-  <i-row i-class="mq-table-content mq-table-row mq-table-row-{{idx%2}}" wx:for="{{ list }}" wx:key="tsCode" wx:for-item="item" wx:for-index="idx" catchtap="checkDetail" data-id="{{item.tsCode}}">
-    <i-col span="{{ 24 / fixedColNum }}" i-class="col-fixed-height">
+  <van-row i-class="mq-table-content mq-table-row mq-table-row-{{idx%2}}" wx:for="{{ list }}" wx:key="tsCode" wx:for-item="item" wx:for-index="idx" catchtap="checkDetail" data-id="{{item.tsCode}}">
+    <van-col span="{{ 24 / fixedColNum }}" i-class="col-fixed-height">
       <view style="flex-direction:column;">
         <text>{{ item.shareName }}</text>
         <text class="little-code">{{ item.tsCode }}</text>
       </view>
-    </i-col>
-    <i-col span="{{ 24 / fixedColNum }}" i-class="col-fixed-height">
+    </van-col>
+    <van-col span="{{ 24 / fixedColNum }}" i-class="col-fixed-height">
       <div class="center">{{ f.trunc(item.nprofitPe) }}</div>
-    </i-col>
-    <i-col span="{{ 24 / fixedColNum }}" i-class="col-fixed-height">
+    </van-col>
+    <van-col span="{{ 24 / fixedColNum }}" i-class="col-fixed-height">
       <div class="center">{{ f.percent(item.seasonNprofitYoy) }} </div>
-    </i-col>
-    <i-col span="{{ 24 / fixedColNum }}" i-class="col-fixed-height">
+    </van-col>
+    <van-col span="{{ 24 / fixedColNum }}" i-class="col-fixed-height">
       <div class="center">{{ f.trunc(item.nprofitPeg) }}</div>
-    </i-col>
-  </i-row>
+    </van-col>
+  </van-row>
 
-  <i-page current="{{ pageNum }}" total="{{ total }}" bind:change="pageChanged" i-class="page-switch">
-    <view slot="prev"><i-icon type="return"/></view>
-    <view slot="next"><i-icon type="enter"/></view>
-  </i-page>
+  <mq-page current="{{ pageNum }}" total="{{ total }}" bind:change="pageChanged" i-class="page-switch">
+    <view slot="prev"><van-icon name="arrow-left"/></view>
+    <view slot="next"><van-icon name="arrow"/></view>
+  </mq-page>
 </view>

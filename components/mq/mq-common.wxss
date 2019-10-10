@@ -14,3 +14,9 @@
 .mq-table-row-0 {
   background-color: #f8f8f9;
 }
+
+.little-code {
+  display: block;
+  font-size: 50%;
+  color: #ddd;
+}

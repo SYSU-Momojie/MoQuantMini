@@ -2,15 +2,57 @@
 <wxs module="f" src="../../../utils/format.wxs"></wxs>
 
 <view>
-  <view class="full-width">
+  <view class="full-width search-part">
     <mq-share-search catchchooseShare="onShareChosen"/>
   </view>
   
-  <view class="top-basic">
-    <view class="top-basic-name">
-      <text class="name">{{ shareName }}</text>
-      <text class="code">{{ tsCode }}</text>
-      <text class="close"> {{ f.trunc(close) }}</text>
-    </view>
+  <view class="full-width form-part">
+    <van-cell custom-class="top-basic">
+      <view slot="title" class="top-basic-name">
+        <text class="name">{{ shareName }}</text>
+        <text class="code little-code">({{ tsCode }})</text>
+        <text class="close"> {{ f.trunc(close) }}</text>
+      </view>
+    </van-cell>
+
+    <van-cell custom-class="revenue indicator-link" is-link title="营业收入" link-type="navigateTo" url="/pages/dashboard/index"/>
+    <van-grid column-num="2">
+      <van-grid-item use-slot custom-class="indicator-container">
+        <text>单季</text>
+        <text>1234</text>
+      </van-grid-item>
+      <van-grid-item use-slot custom-class="indicator-container">
+        <text>单季增速</text>
+        <text>12%</text>
+      </van-grid-item>
+    </van-grid>
+
+    <van-cell custom-class="nprofit indicator-link" is-link title="归母净利润" link-type="navigateTo" url="/pages/dashboard/index"/>
+    <van-grid column-num="5">
+      <van-grid-item use-slot custom-class="indicator-container">
+        <text>单季</text>
+        <text>1234</text>
+      </van-grid-item>
+      <van-grid-item use-slot custom-class="indicator-container">
+        <text>单季增速</text>
+        <text>12%</text>
+      </van-grid-item>
+      <van-grid-item use-slot custom-class="indicator-container">
+        <text>LTM</text>
+        <text>1234</text>
+      </van-grid-item>
+      <van-grid-item use-slot custom-class="indicator-container">
+        <text>PE</text>
+        <text>12%</text>
+      </van-grid-item>
+      <van-grid-item use-slot>
+        <view class="indicator-container">
+          <text>PEG</text>
+          <text>0.5</text>
+        </view>
+      </van-grid-item>
+    </van-grid>
+
   </view>
+  
 </view>

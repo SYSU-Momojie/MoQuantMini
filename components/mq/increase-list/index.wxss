@@ -2,12 +2,6 @@
 
 @import "../mq-common.wxss";
 
-.little-code {
-  display: block;
-  font-size: 50%;
-  color: #ddd;
-}
-
 .col-fixed-height {
   height: 80rpx;
   padding: 6rpx 0;

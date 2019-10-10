@@ -1,9 +1,9 @@
 <!--index.wxml-->
 <view class="container">
-  <view class="full-width">
+  <view class="full-width search-part">
     <mq-share-search catchchooseShare="onShareChosen"/>
   </view>
-  <view class="full-width">
+  <view class="full-width list-part">
     <mq-increase-list catchchooseShare="onShareChosen"/>
   </view>
 </view>
