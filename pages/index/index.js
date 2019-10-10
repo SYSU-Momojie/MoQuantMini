@@ -46,8 +46,7 @@ Page({
     })
   },
   onShareChosen: function(event) {
-    console.log(event);
-    var tsCode = event.detail;
+    var tsCode = event.detail.tsCode;
     wx.navigateTo({
       url: 'share-detail/index?tsCode=' + tsCode
     });

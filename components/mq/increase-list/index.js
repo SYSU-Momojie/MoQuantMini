@@ -72,18 +72,16 @@ Component({
         param.peg = true;
       }
       this.showSpin();
-      // api.post('getPageList', param, this.updateList.bind(this), null)
-      this.hideSpin();
+      api.post('getPageList', param, this.updateList.bind(this))
     },
 
-    updateList: function({
-      data
-    }) {
+    updateList: function(resp) {
+      console.log(resp)
+      var data = resp.data;
       this.setData({
         list: data.list,
         total: Math.ceil((data.total - 1) / this.data.pageSize) + 1
       })
-      //console.log(data);
       this.hideSpin();
     },
 
@@ -105,7 +103,6 @@ Component({
 
     orderChanged: function(event) {
       var to = event.currentTarget.dataset.order;
-      console.log(to);
       if (to !== this.data.orderBy) {
         this.setData({orderBy: to});
         this.requestData();
@@ -121,7 +118,6 @@ Component({
     },
 
     checkDetail: function(event) {
-      console.log(event);
       this.triggerEvent('chooseShare', { tsCode: event.currentTarget.dataset.id });
     }
   }

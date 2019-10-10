@@ -1,5 +1,5 @@
 <!--components/mq/table/index.wxml-->
-<wxs module="f" src="../../../utils/format.wxs"></wxs>
+<wxs module="f" src="../../../utils/format.wxs"/>
 
 <view class="mq-table">
   <van-loading type="spinner" wx:if="{{ spinShow }}"/>

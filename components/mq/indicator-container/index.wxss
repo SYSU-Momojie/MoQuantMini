@@ -1,0 +1,9 @@
+/* components/mq/indicator-container/index.wxss */
+
+.label {
+  text-align: center;
+}
+
+.value {
+  text-align: center;
+}

@@ -11,28 +11,22 @@ Component({
   },
 
   /**
-   * 组件的初始数据
-   */
-  data: {
-
-  },
-
-  /**
    * 组件的方法列表
    */
   methods: {
     onChange: function(event) {
-      this.setData({hintList: [{tsCode: '000001.SZ', shareName: '平安银行'}, 
-        { tsCode: '000002.SZ', shareName: '万科A'}]})
+      // console.log(event);
+      this.setData({hintList: [{tsCode: event.detail, shareName: '未知'}]})
     },
     onBlur: function(event) {
-      this.clearHint();
-      //setTimeout(this.clearHint.bind(this), 50);
+      // this.clearHint();
+      setTimeout(this.clearHint.bind(this), 100);
     },
     clearHint: function() {
       this.setData({ hintList: [] });
     },
     handleTap: function (event) {
+      console.log(event);
       this.triggerEvent('chooseShare', { tsCode: event.currentTarget.dataset.id});
     }
   }

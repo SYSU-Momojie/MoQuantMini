@@ -1,0 +1,7 @@
+<!--components/mq/indicator-container/index.wxml-->
+<wxs module="f" src="../../../utils/format.wxs"/>
+
+<view class="indicator-container">
+  <view class="label">{{label}}</view>
+  <view class="value">{{ f.format(value, pattern) }}</view>
+</view>
