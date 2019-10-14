@@ -19,13 +19,13 @@
       </view>
     </van-col>
     <van-col span="{{ 24 / fixedColNum }}" i-class="col-fixed-height">
-      <div class="center">{{ f.trunc(item.nprofitPe) }}</div>
+      <div class="center">{{ f.trunc(item.dprofitPe) }}</div>
     </van-col>
     <van-col span="{{ 24 / fixedColNum }}" i-class="col-fixed-height">
-      <div class="center">{{ f.percent(item.seasonNprofitYoy) }} </div>
+      <div class="center">{{ f.percent(item.quarterDprofitYoy) }} </div>
     </van-col>
     <van-col span="{{ 24 / fixedColNum }}" i-class="col-fixed-height">
-      <div class="center">{{ f.trunc(item.nprofitPeg) }}</div>
+      <div class="center">{{ f.trunc(item.dprofitPeg) }}</div>
     </van-col>
   </van-row>
 
