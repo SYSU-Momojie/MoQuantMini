@@ -1,0 +1,3 @@
+<!--pages/trend/index.wxml-->
+<text>{{ tsCode }}</text>
+<text>{{ trendType }}</text>

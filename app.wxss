@@ -1,4 +1,6 @@
 /**app.wxss**/
+@import "miniprogram_npm/vant-weapp/common/index.wxss";
+
 .container {
   height: 100%;
   display: flex;
@@ -17,5 +19,5 @@
 }
 
 .search-part {
-  margin-bottom: 30rpx;
+  margin-bottom: 20rpx;
 }

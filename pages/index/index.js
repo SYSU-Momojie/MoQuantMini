@@ -48,7 +48,7 @@ Page({
   onShareChosen: function(event) {
     var tsCode = event.detail.tsCode;
     wx.navigateTo({
-      url: 'share-detail/index?tsCode=' + tsCode
+      url: '/pages/detail/index?tsCode=' + tsCode
     });
   }
 })

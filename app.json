@@ -1,8 +1,9 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/index/share-detail/index",
-    "pages/logs/logs"
+    "pages/detail/index",
+    "pages/logs/logs",
+    "pages/trend/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
