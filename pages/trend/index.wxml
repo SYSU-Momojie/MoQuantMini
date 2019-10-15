@@ -1,3 +1,11 @@
 <!--pages/trend/index.wxml-->
-<text>{{ tsCode }}</text>
-<text>{{ trendType }}</text>
+<!--index.wxml-->
+<view class="page-container">
+  <view class="full-width search-part van-hairline--bottom">
+    <mq-share-search catchchooseShare="onShareChosen"/>
+  </view>
+
+  <view class="full-width chart-part">
+    <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}" />
+  </view>
+</view>

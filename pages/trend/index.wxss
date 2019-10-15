@@ -1,1 +1,6 @@
 /* pages/trend/index.wxss */
+
+.chart-part {
+  width: 100%;
+  height: 500rpx;
+}

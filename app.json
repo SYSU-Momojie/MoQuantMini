@@ -25,6 +25,7 @@
     ]
   },
   "usingComponents": {
+    "ec-canvas": "/components/ec-canvas/ec-canvas",
     "van-search": "vant-weapp/search",
     "van-cell-group": "vant-weapp/cell-group",
     "van-cell": "vant-weapp/cell",

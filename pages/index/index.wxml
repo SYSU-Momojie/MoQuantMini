@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<view class="container">
+<view class="page-container">
   <view class="full-width search-part van-hairline--bottom">
     <mq-share-search catchchooseShare="onShareChosen"/>
   </view>

@@ -22,3 +22,8 @@
   font-size: 50%;
   color: #ddd;
 }
+
+.chart-container {
+  width: 100%;
+  height: 500rpx;
+}

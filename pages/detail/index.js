@@ -59,6 +59,16 @@ Page({
     wx.navigateTo({
       url: `/pages/trend/index?tsCode=${this.data.tsCode}&t=${t}`
     })
+  },
+
+  onShareChosen: function(event) {
+    var tsCode = event.detail.tsCode;
+    if (tsCode !== this.data.tsCode) {
+      this.setData({
+        tsCode: tsCode
+      });
+      this.requestData();
+    }
   }
 
 })
