@@ -45,7 +45,6 @@ Page({
   },
 
   updatePage: function(resp) {
-    console.log(resp);
     if (resp.errMsg === 'request:ok' && resp.data instanceof Object) {
       this.setData(resp.data);
     } else {

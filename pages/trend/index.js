@@ -1,6 +1,8 @@
 // pages/trend/index.js
 
 import * as echarts from '../../components/ec-canvas/echarts';
+const api = require('../../utils/api.js');
+const format = require('../../utils/format.js');
 
 Page({
 
@@ -68,46 +70,95 @@ Page({
       console.log("not ready");
       return ;
     }
-    var options = this.getChartOption();
-    console.log(this.chart);
-    this.chart.setOption(options);
+    var param = {
+      tsCode: this.data.tsCode,
+      trendType: this.data.trendType
+    };
+    var resp = {
+      errMsg: 'request:ok',
+      data: {
+        x: ['01', '02', '03', '01', '02', '03', '01', '02', '03'],
+        vl1: [0.123, 0.223, 0.3, 0.1, 0.2, 0.3, 0.1, 0.2, 0.3],
+        vl2: [0.223, 0.33, 0.4, 0.2, 0.3, 0.4, 0.2, 0.1, 0.2]
+      }
+    };
+    // this.updateChart(resp);
+    api.post('getTrendByCode', param, this.updateChart.bind(this));    
   },
 
-  getChartOption: function() {
+  updateChart: function(resp) {
+    if (resp.errMsg === 'request:ok' && resp.data instanceof Object) {
+      console.log(resp.data);
+      var options = this.getChartOption(resp.data);
+      console.log(options);
+      this.chart.setOption(options);
+    } else {
+      // TODO err hint
+    }
+  },
+
+  getChartOption: function(data) {
+    var yList = [];
+    var series = [];
+    var showX = false;
+    if (this.data.trendType === 'PB') {
+      yList = [
+        {
+          name: 'PB',
+          position: 'left'
+        }
+      ];
+      series = [
+        {
+          name: 'PB',
+          type: 'line',
+          yAxis: 0,
+          data: format.truncArr(data.vl1)
+        }
+      ];
+    }
     return {
       title: {
-        text: 'ECharts 入门示例'
+        show: false
       },
-      tooltip: {},
+      tooltip: {
+        show: true,
+        trigger: 'axis',
+        renderMode: 'richText',
+        axisPointer: {
+          type: 'cross',
+          label: {
+            show: false,
+          }
+        },
+        precision: 2,
+        formatter: function (paramList) {
+          console.log(paramList);
+          var text = '';
+          if (paramList.length > 0) {
+            text += `${paramList[0].axisValueLabel}\n`;
+          }
+          for (var i = 0 ; i < paramList.length ; i++) {
+            var param = paramList[i];
+            console.log(param);
+            text += `${param.seriesName}: ${param.value}\n`;
+          }
+          return text;
+        }
+      },
       legend: {
-        data: ['销量']
       },
       xAxis: {
-        data: ["衬衫", "羊毛衫", "雪纺衫", "裤子"]
+        type: 'category',
+        data: data.x,
+        axisPointer: {
+        },
+        axisTick: {
+          alignWithLabel: true
+        },
       },
-      yAxis: [
-        {
-          name: '销量',
-          position: 'left'
-        },
-        {
-          name: '增速',
-          position: 'right'
-        }
-      ],
-      series: [
-        {
-          name: '销量',
-          type: 'bar',
-          data: [5, 20, 36, 10]
-        },
-        {
-          name: '增速',
-          type: 'line',
-          yAxisIndex: 1,
-          data: [0.5, 0.6, 0.3, 0.4]
-        }
-      ]
+      yAxis: yList,
+      series: series
     };
   },
 
