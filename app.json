@@ -2,7 +2,6 @@
   "pages": [
     "pages/index/index",
     "pages/detail/index",
-    "pages/logs/logs",
     "pages/trend/index"
   ],
   "window": {
@@ -19,8 +18,8 @@
         "text": "首页"
       },
       {
-        "pagePath": "pages/logs/logs",
-        "text": "日志"
+        "pagePath": "pages/trend/index",
+        "text": "趋势"
       }
     ]
   },

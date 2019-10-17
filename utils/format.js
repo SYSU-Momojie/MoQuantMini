@@ -2,34 +2,40 @@ var notNum = function (num) {
   return (num === undefined || num === null || typeof num !== 'number');
 }
 
-var unit = function (num) {
+var unit = function (num, pre = -1) {
   if (notNum(num)) {
     return '-'
   } else if (Math.abs(num) >= 100000000) {
     num = num / 100000000;
-    return trunc(num) + '亿';
+    return trunc(num, pre) + '亿';
   } else if (Math.abs(num) >= 10000) {
     num = num / 10000;
-    return trunc(num) + '万';
+    return trunc(num, pre) + '万';
   } else {
-    return trunc(num) + '';
+    return trunc(num, pre) + '';
   }
 }
 
-var percent = function (num) {
+var percent = function (num, pre = -1) {
   if (notNum(num)) {
     return '-'
   } else {
     num = num * 100;
-    return trunc(num) + '%';
+    return trunc(num, pre) + '%';
   }
 }
 
-var trunc = function (num) {
+var trunc = function (num, pre = -1) {
   if (notNum(num)) {
     return '-'
   } else {
-    return num.toFixed(Math.abs(num) >= 100 ? 0 : 2);
+    if (pre === -1 && num !== 0) {
+      pre = 2 - Math.floor(Math.log10(Math.abs(num)));
+    }
+    if (pre < 0) {
+      pre = 0;
+    }
+    return num.toFixed(pre);
   }
 }
 

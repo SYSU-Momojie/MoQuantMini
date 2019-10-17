@@ -12,3 +12,7 @@
 .trend-period-part {
   margin-top: 20rpx;
 }
+
+.chart-part {
+  margin-top: 20rpx;
+}

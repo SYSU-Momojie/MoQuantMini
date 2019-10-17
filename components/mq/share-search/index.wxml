@@ -7,10 +7,10 @@
     bind:blur="onBlur"
     shape="round"
   />
-
-  <view class="hint" wx:if="{{ hintList.length > 0 }}">
+<!-- wx:if="{{ hintList.length > 0 }}" -->
+  <view class="hint" >
     <van-cell-group custom-class="">
-      <van-cell class="hint-item" wx:for="{{ hintList }}" wx:key="tsCode" wx:for-item="item" wx:for-index="idx" catchclick="handleTap" data-id="{{item.tsCode}}" title="{{ item.shareName }}" value="{{ item.tsCode }}"/>
+      <van-cell class="hint-item" wx:for="{{ hintList }}" wx:key="tsCode" wx:for-item="item" wx:for-index="idx" catchclick="handleTap" data-id="{{item.tsCode}}" title="{{ item.name }}" value="{{ item.tsCode }}"/>
     </van-cell-group>
   </view>
 </view>

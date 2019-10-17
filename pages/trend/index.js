@@ -20,30 +20,35 @@ Page({
     },
     chartInit: false,
     chartDisposed: false,
-    cacheData: {}
+    cacheData: {},
+    trendPeriod: 1,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.resetData(options.tsCode, options.t)
+    this.initChart();
+    setTimeout(this.requestData.bind(this), 200);
+  },
+
+  resetData: function(tsCode, trendType) {
     this.setData({
-      tsCode: options.tsCode,
-      trendType: options.t,
-      showQuarter: this.needQuartOrYear(options.t),
+      tsCode: tsCode,
+      trendType: trendType,
+      showQuarter: this.needQuartOrYear(trendType),
       cacheData: {
         'PE': { x: [], vl1: [], vl2: [], c: false },
         'PB': { x: [], vl1: [], vl2: [], c: false },
-        'REVENUE': { x: [], vl1: [], vl2: [], c: false },
+        'REVENUE_YEAR': { x: [], vl1: [], vl2: [], c: false },
         'REVENUE_QUARTER': { x: [], vl1: [], vl2: [], c: false },
-        'NPROFIT': { x: [], vl1: [], vl2: [], c: false },
+        'NPROFIT_YEAR': { x: [], vl1: [], vl2: [], c: false },
         'NPROFIT_QUARTER': { x: [], vl1: [], vl2: [], c: false },
-        'DPROFIT': { x: [], vl1: [], vl2: [], c: false },
+        'DPROFIT_YEAR': { x: [], vl1: [], vl2: [], c: false },
         'DPROFIT_QUARTER': { x: [], vl1: [], vl2: [], c: false },
       },
     });
-    this.initChart();
-    setTimeout(this.requestData.bind(this), 200);
   },
 
   onTrendQuarterChange: function(event) {
@@ -58,6 +63,13 @@ Page({
     this.setData({
       trendType: event.detail.name,
       showQuarter: this.needQuartOrYear(event.detail.name),
+    });
+    this.requestData();
+  },
+
+  onTrendPeriodChange: function(event) {
+    this.setData({
+      trendPeriod: parseInt(event.detail.name),
     });
     this.requestData();
   },
@@ -138,6 +150,10 @@ Page({
     if (resp.errMsg === 'request:ok' && resp.data instanceof Object) {
       console.log(resp.data);
       var data = resp.data;
+      if (data.x.length === 0) {
+        //
+        return ;
+      }
       data.c = true;
       var cacheData = this.data.cacheData;
       cacheData[this.getRequestTrend()] = data;
@@ -158,6 +174,7 @@ Page({
   },
 
   getChartOption: function(data) {
+    var s = this.startIndex(data.x);
     var yList = [];
     var series = [];
     var showX = false;
@@ -165,7 +182,10 @@ Page({
       yList = [
         {
           name: this.data.trendType,
-          position: 'left'
+          position: 'left',
+          axisLabel: {
+            fontSize: 10,
+          }
         }
       ];
       series = [
@@ -173,10 +193,10 @@ Page({
           name: this.data.trendType,
           type: 'line',
           yAxis: 0,
-          data: format.truncArr(data.vl1)
+          data: format.truncArr(data.vl1.slice(s))
         }
       ];
-    } else if (this.data.trendType === 'REVENUE' || this.data.trendType === 'NPROFIT' || this.data.trendType === 'DPROFIT') {
+    } else if (this.needQuartOrYear()) {
       yList = [
         {
           name: this.convertTrendTypeToLabel(this.data.trendType),
@@ -184,7 +204,8 @@ Page({
           axisLabel: {
             formatter: function(value, index) {
               return format.unit(value);
-            }
+            },
+            fontSize: 10,
           }
         },
         {
@@ -193,22 +214,23 @@ Page({
           axisLabel: {
             formatter: function (value, index) {
               return format.percent(value);
-            }
-          }
+            },
+            fontSize: 10,
+          },
         }
       ];
       series = [
         {
           name: this.convertTrendTypeToLabel(this.data.trendType),
           type: 'bar',
-          yAxis: 0,
-          data: data.vl1
+          yAxisIndex: 0,
+          data: data.vl1.slice(s)
         },
         {
           name: '增速',
           type: 'line',
-          yAxis: 1,
-          data: data.vl2
+          yAxisIndex: 1,
+          data: data.vl2.slice(s)
         },
       ];
     }
@@ -227,29 +249,38 @@ Page({
           }
         },
         precision: 2,
-        formatter: function (paramList) {
-          console.log(paramList);
-          var text = '';
-          if (paramList.length > 0) {
-            text += `${paramList[0].axisValueLabel}\n`;
-          }
-          for (var i = 0 ; i < paramList.length ; i++) {
-            var param = paramList[i];
-            console.log(param);
-            text += `${param.seriesName}: ${param.value}\n`;
-          }
-          return text;
-        }
+        formatter: this.formatTooltip.bind(this),
       },
       legend: {
       },
       xAxis: {
         type: 'category',
-        data: data.x
+        data: data.x.slice(s)
       },
       yAxis: yList,
       series: series
     };
+  },
+
+  formatTooltip: function (paramList) {
+    console.log(paramList);
+    var text = '';
+    if (paramList.length > 0) {
+      text += `${paramList[0].axisValueLabel}\n`;
+    }
+    for (var i = 0; i < paramList.length; i++) {
+      var param = paramList[i];
+      console.log(param);
+      var value = param.value;
+      var vstr;
+      if (this.needQuartOrYear()) {
+        vstr = i === 0 ? format.unit(value) : format.percent(value);
+      } else {
+        vstr = value.toString();
+      }
+      text += `${param.seriesName}: ${vstr}\n`;
+    }
+    return text;
   },
 
   convertTrendTypeToLabel: function(trendType) {
@@ -265,6 +296,29 @@ Page({
       return '扣非净利';
     }
     return '错啦';
+  },
+
+  startIndex: function(x) {
+    if (this.data.trendPeriod === 0) {
+      return 0;
+    }
+    var dStr = x[x.length - 1];
+    var year = parseInt(dStr.substr(0, 4)) - this.data.trendPeriod;
+    var targetX = year + dStr.substr(4);
+    for (var i = 0 ; i < x.length ; i++) {
+      if (x[i] >= targetX) {
+        return i;
+      }
+    }
+    return x.length;
+  },
+
+  onShareChosen: function(event) {
+    var tsCode = event.detail.tsCode;
+    if (tsCode !== this.data.tsCode) {
+      this.resetData(tsCode, this.data.trendType);
+      this.requestData();
+    }
   },
 
   /**
