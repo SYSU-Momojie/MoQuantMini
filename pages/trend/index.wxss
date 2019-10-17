@@ -4,3 +4,11 @@
   width: 100%;
   height: 500rpx;
 }
+
+.trend-quarter-part {
+  margin-top: 20rpx;
+}
+
+.trend-period-part {
+  margin-top: 20rpx;
+}

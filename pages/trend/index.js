@@ -12,27 +12,65 @@ Page({
   data: {
     tsCode: '000000.SZ',
     shareName: 'MQ基金',
-    trendType: 'pb',
+    trendType: 'PB',
+    showQuarter: false,
+    trendQuarter: 'QUARTER',
     ec: {
       lazyLoad: true
     },
     chartInit: false,
-    chartDisposed: false
+    chartDisposed: false,
+    cacheData: {}
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if (options.tsCode === this.data.tsCode && options.t === this.data.t) {
-      return;
-    }
     this.setData({
       tsCode: options.tsCode,
-      trendType: options.t
+      trendType: options.t,
+      showQuarter: this.needQuartOrYear(options.t),
+      cacheData: {
+        'PE': { x: [], vl1: [], vl2: [], c: false },
+        'PB': { x: [], vl1: [], vl2: [], c: false },
+        'REVENUE': { x: [], vl1: [], vl2: [], c: false },
+        'REVENUE_QUARTER': { x: [], vl1: [], vl2: [], c: false },
+        'NPROFIT': { x: [], vl1: [], vl2: [], c: false },
+        'NPROFIT_QUARTER': { x: [], vl1: [], vl2: [], c: false },
+        'DPROFIT': { x: [], vl1: [], vl2: [], c: false },
+        'DPROFIT_QUARTER': { x: [], vl1: [], vl2: [], c: false },
+      },
     });
     this.initChart();
     setTimeout(this.requestData.bind(this), 200);
+  },
+
+  onTrendQuarterChange: function(event) {
+    this.setData({
+      trendQuarter: event.detail.name,
+    });
+    this.requestData();
+  },
+
+  onTrendTypeChange: function(event) {
+    console.log(event);
+    this.setData({
+      trendType: event.detail.name,
+      showQuarter: this.needQuartOrYear(event.detail.name),
+    });
+    this.requestData();
+  },
+
+  needQuartOrYear: function (trendTab) {
+    if (trendTab === null || trendTab === undefined) {
+      trendTab = this.data.trendType;
+    }
+    console.log(trendTab);
+    if (trendTab === 'REVENUE' || trendTab === 'NPROFIT' || trendTab === 'DPROFIT') {
+      return true;
+    }
+    return false;
   },
 
   initChart: function() {
@@ -70,51 +108,108 @@ Page({
       console.log("not ready");
       return ;
     }
-    var param = {
-      tsCode: this.data.tsCode,
-      trendType: this.data.trendType
-    };
-    var resp = {
-      errMsg: 'request:ok',
-      data: {
-        x: ['01', '02', '03', '01', '02', '03', '01', '02', '03'],
-        vl1: [0.123, 0.223, 0.3, 0.1, 0.2, 0.3, 0.1, 0.2, 0.3],
-        vl2: [0.223, 0.33, 0.4, 0.2, 0.3, 0.4, 0.2, 0.1, 0.2]
-      }
-    };
-    // this.updateChart(resp);
-    api.post('getTrendByCode', param, this.updateChart.bind(this));    
+
+    if (this.data.cacheData[this.getRequestTrend()].c === true) {
+      this.updateChart(this.data.cacheData[this.getRequestTrend()]);
+    } else {
+      var param = {
+        tsCode: this.data.tsCode,
+        trendType: this.getRequestTrend(),
+      };
+      
+      var resp = {
+        errMsg: 'request:ok',
+        data: {
+          x: ['01', '02', '03', '01', '02', '03', '01', '02', '03'],
+          vl1: [0.123, 0.223, 0.3, 0.1, 0.2, 0.3, 0.1, 0.2, 0.3],
+          vl2: [0.223, 0.33, 0.4, 0.2, 0.3, 0.4, 0.2, 0.1, 0.2]
+        }
+      };
+      // this.updateChart(resp);
+      api.post('getTrendByCode', param, this.updateAfterRequest.bind(this));
+    }
   },
 
-  updateChart: function(resp) {
+  getRequestTrend: function() {
+    return this.data.trendType + (this.needQuartOrYear() ? '_' + this.data.trendQuarter : '');
+  },
+
+  updateAfterRequest: function(resp) {
     if (resp.errMsg === 'request:ok' && resp.data instanceof Object) {
       console.log(resp.data);
-      var options = this.getChartOption(resp.data);
-      console.log(options);
-      this.chart.setOption(options);
+      var data = resp.data;
+      data.c = true;
+      var cacheData = this.data.cacheData;
+      cacheData[this.getRequestTrend()] = data;
+      this.setData({
+        cacheData
+      });
+      this.updateChart(this.data.cacheData[this.getRequestTrend()]);
     } else {
       // TODO err hint
     }
+  },
+
+  updateChart: function(data) {
+      console.log(data);
+      var options = this.getChartOption(data);
+      console.log(options);
+      this.chart.setOption(options);
   },
 
   getChartOption: function(data) {
     var yList = [];
     var series = [];
     var showX = false;
-    if (this.data.trendType === 'PB') {
+    if (this.data.trendType === 'PB' || this.data.trendType === 'PE') {
       yList = [
         {
-          name: 'PB',
+          name: this.data.trendType,
           position: 'left'
         }
       ];
       series = [
         {
-          name: 'PB',
+          name: this.data.trendType,
           type: 'line',
           yAxis: 0,
           data: format.truncArr(data.vl1)
         }
+      ];
+    } else if (this.data.trendType === 'REVENUE' || this.data.trendType === 'NPROFIT' || this.data.trendType === 'DPROFIT') {
+      yList = [
+        {
+          name: this.convertTrendTypeToLabel(this.data.trendType),
+          position: 'left',
+          axisLabel: {
+            formatter: function(value, index) {
+              return format.unit(value);
+            }
+          }
+        },
+        {
+          name: '增速',
+          position: 'right',
+          axisLabel: {
+            formatter: function (value, index) {
+              return format.percent(value);
+            }
+          }
+        }
+      ];
+      series = [
+        {
+          name: this.convertTrendTypeToLabel(this.data.trendType),
+          type: 'bar',
+          yAxis: 0,
+          data: data.vl1
+        },
+        {
+          name: '增速',
+          type: 'line',
+          yAxis: 1,
+          data: data.vl2
+        },
       ];
     }
     return {
@@ -150,16 +245,26 @@ Page({
       },
       xAxis: {
         type: 'category',
-        data: data.x,
-        axisPointer: {
-        },
-        axisTick: {
-          alignWithLabel: true
-        },
+        data: data.x
       },
       yAxis: yList,
       series: series
     };
+  },
+
+  convertTrendTypeToLabel: function(trendType) {
+    if (trendType === 'PE') {
+      return 'PE';
+    } else if (trendType === 'PB') {
+      return 'PB';
+    } else if (trendType === 'REVENUE') {
+      return '营业收入';
+    } else if (trendType === 'NPROFIT') {
+      return '归母净利';
+    } else if (trendType === 'DPROFIT') {
+      return '扣非净利';
+    }
+    return '错啦';
   },
 
   /**

@@ -1,8 +1,33 @@
 <!--pages/trend/index.wxml-->
-<!--index.wxml-->
 <view class="page-container">
   <view class="full-width search-part van-hairline--bottom">
     <mq-share-search catchchooseShare="onShareChosen"/>
+  </view>
+
+  <view class="full-width trend-type-part">
+    <van-tabs catchchange="onTrendTypeChange">
+      <van-tab title="PB" name="PB" />
+      <van-tab title="PE" name="PE" />
+      <van-tab title="营业收入" name="REVENUE" />
+      <van-tab title="归母净利" name="NPROFIT" />
+      <van-tab title="扣非净利" name="DPROFIT" />
+    </van-tabs>
+  </view>
+
+  <view class="full-width trend-quarter-part" wx:if="{{ showQuarter }}">
+    <van-tabs catchchange="onTrendQuarterChange" type="card">
+      <van-tab title="按季" name="QUARTER" />
+      <van-tab title="按年" name="YEAR" />
+    </van-tabs>
+  </view>
+
+  <view class="full-width trend-period-part">
+    <van-tabs catchchange="onTrendPeriodChange" type="card">
+      <van-tab title="一年" name="1" />
+      <van-tab title="三年" name="3" />
+      <van-tab title="五年" name="5" />
+      <van-tab title="全部" name="0" />
+    </van-tabs>
   </view>
 
   <view class="full-width chart-part">
