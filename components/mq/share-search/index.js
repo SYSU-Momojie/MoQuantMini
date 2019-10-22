@@ -1,6 +1,7 @@
 // components/mq/share-search/index.js
 const api = require('../../../utils/api.js')
 const dateUtil = require('../../../utils/date.js')
+const strUtil = require('../../../utils/string.js')
 
 Component({
   /**
@@ -18,6 +19,10 @@ Component({
     latest: {
       type: Array,
       value: []
+    },
+    inputValue: {
+      type: String,
+      value: ''
     }
   },
 
@@ -28,9 +33,15 @@ Component({
       if (data && dt && dt === dateUtil.getDt()) {
         this.setData({
           shareList: data
-        })
+        });
       } else {
         api.post('getAllShareForSearch', {}, this.updateAfterRequest.bind(this));
+      }
+      var latest = wx.getStorageSync('searchLatest');
+      if (latest) {
+        this.setData({
+          latest
+        });
       }
     }
   },
@@ -53,7 +64,8 @@ Component({
       var nHintList = [];
       for (var i = 0 ; i < toFind.length ; i++) {
         for (var j = 0 ; j < this.data.shareList.length ; j++) {
-          if (this.data.shareList[j].tsCode.indexOf(toFind[i]) >= 0) {
+          if (strUtil.ignoreCaseContains(this.data.shareList[j].tsCode, toFind[i]) ||
+            strUtil.ignoreCaseContains(this.data.shareList[j].py, toFind[i])) {
             nHintList.push(this.data.shareList[j]);
             if (nHintList.length === 5) {
               break;
@@ -73,12 +85,33 @@ Component({
       // this.clearHint();
       setTimeout(this.clearHint.bind(this), 100);
     },
+    onFocus: function(event) {
+      this.showHint();
+    },
     clearHint: function() {
       this.setData({ hintList: [] });
     },
     handleTap: function (event) {
       console.log(event);
-      this.triggerEvent('chooseShare', { tsCode: event.currentTarget.dataset.id});
+      var code = event.currentTarget.dataset.id;
+      var latest = this.data.latest;
+      var index = latest.indexOf(code);
+      if (index > -1) {
+        latest.splice(index, 1);
+      }
+      latest.unshift(code);
+      if (latest.length > 5) {
+        latest.splice(5, 1);
+      }
+      this.setData({
+        latest,
+        inputValue: ''
+      });
+      wx.setStorage({
+        key: 'searchLatest',
+        data: latest,
+      });
+      this.triggerEvent('chooseShare', { tsCode: code });
     },
     updateAfterRequest: function(resp) {
       if (resp.errMsg === 'request:ok' && resp.data instanceof Array) {

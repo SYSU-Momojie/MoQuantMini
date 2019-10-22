@@ -5,3 +5,7 @@
   top: 90rpx;
   width: 100%;
 }
+
+.hint-list {
+  z-index: 100000;
+}
