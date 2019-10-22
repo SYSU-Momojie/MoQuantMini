@@ -3,7 +3,8 @@
     "pages/index/index",
     "pages/detail/index",
     "pages/trend/index",
-    "pages/about/index"
+    "pages/about/index",
+    "pages/indicator-explain/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -16,11 +17,19 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "首页"
+        "text": "首页",
+        "color": "#323233",
+        "selectedColor": "#32B632",
+        "iconPath": "icons/list.png",
+        "selectedIconPath": "icons/list-act.png"
       },
       {
         "pagePath": "pages/about/index",
-        "text": "关于"
+        "text": "关于",
+        "color": "#323233",
+        "selectedColor": "#32B632",
+        "iconPath": "icons/info.png",
+        "selectedIconPath": "icons/info-act.png"
       }
     ]
   },
@@ -34,6 +43,8 @@
     "van-grid": "vant-weapp/grid",
     "van-grid-item": "vant-weapp/grid-item",
     "van-tab": "vant-weapp/tab",
-    "van-tabs": "vant-weapp/tabs"
+    "van-tabs": "vant-weapp/tabs",
+    "van-collapse": "vant-weapp/collapse",
+    "van-collapse-item": "vant-weapp/collapse-item"
   }
 }

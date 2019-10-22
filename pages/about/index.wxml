@@ -1,2 +1,22 @@
 <!--pages/about/index.wxml-->
-<text>pages/about/index.wxml</text>
+<view class="page-container">
+  <view class="full-width explain-part">
+  <van-cell-group title="工具小解释">
+    <van-cell
+      is-link
+      title="指标计算"
+      link-type="navigateTo"
+      url="/pages/indicator-explain/index"/>
+    <van-cell
+      is-link
+      title="成长股"
+      link-type="navigateTo"
+      url="/pages/indicator-explain/index"/>
+    <van-cell
+      is-link
+      title="价值股"
+      link-type="navigateTo"
+      url="/pages/indicator-explain/index"/>
+  </van-cell-group>
+  </view>
+</view>

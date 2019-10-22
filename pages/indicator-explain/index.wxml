@@ -1,0 +1,17 @@
+<!--pages/indicator-explain/index.wxml-->
+<view class="page-container">
+  <view class="full-width explain-part">
+    <van-collapse value="{{ activeNames }}" catchchange="onChange">
+      <van-collapse-item title="PE" name="PE">
+        PE=市值/净利。
+        取最近4季（LTM）的扣非净利计算，含预告。其中预告接口目前没有关于扣非净利字段，故默认当季无非经常性损益，后续再考虑人工修正。
+      </van-collapse-item>
+      <van-collapse-item title="增速" name="G">
+        单季的扣非净利同比增速
+      </van-collapse-item>
+      <van-collapse-item title="PEG" name="PEG">
+        PEG = PE / G / 100
+      </van-collapse-item>
+    </van-collapse>
+  </view>
+</view>
