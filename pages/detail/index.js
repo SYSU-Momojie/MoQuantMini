@@ -54,9 +54,10 @@ Page({
 
   goToTrend: function(event) {
     var t = event.currentTarget.dataset.t;
-    console.log('Going to trend page ' + t);
+    var url = `/pages/trend/index?tsCode=${this.data.tsCode}&t=${t}`;
+    console.log('Going to trend page ' + url);
     wx.navigateTo({
-      url: `/pages/trend/index?tsCode=${this.data.tsCode}&t=${t}`
+      url
     })
   },
 

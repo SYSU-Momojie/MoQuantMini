@@ -2,7 +2,8 @@
   "pages": [
     "pages/index/index",
     "pages/detail/index",
-    "pages/trend/index"
+    "pages/trend/index",
+    "pages/about/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -18,8 +19,8 @@
         "text": "首页"
       },
       {
-        "pagePath": "pages/trend/index",
-        "text": "趋势"
+        "pagePath": "pages/about/index",
+        "text": "关于"
       }
     ]
   },
