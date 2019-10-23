@@ -4,7 +4,7 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": false,
+		"urlCheck": true,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
@@ -49,19 +49,20 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 1,
+			"current": 0,
 			"list": [
 				{
-					"id": -1,
+					"id": 0,
 					"name": "测试趋势",
 					"pathName": "pages/trend/index",
-					"query": "tsCode=000001.SZ&t=PB",
+					"query": "tsCode=000001.SZ&t=REVENUE",
 					"scene": null
 				},
 				{
 					"id": -1,
 					"name": "关于",
 					"pathName": "pages/about/index",
+					"query": "",
 					"scene": null
 				}
 			]

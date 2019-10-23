@@ -1,6 +1,6 @@
 <!--components/mq/share-search/index.wxml-->
 
-<cover-view class="full-width relative">
+<view class="full-width relative">
   <van-search
     placeholder="请输入股票代码/拼音"
     catchchange="onChange"
@@ -10,9 +10,9 @@
     value="{{ inputValue }}"
   />
 <!-- wx:if="{{ hintList.length > 0 }}" -->
-  <cover-view class="hint" >
+  <view class="hint" >
     <van-cell-group custom-class="hint-list">
       <van-cell class="hint-item" wx:for="{{ hintList }}" wx:key="tsCode" wx:for-item="item" wx:for-index="idx" catchclick="handleTap" data-id="{{item.tsCode}}" title="{{ item.name }}" value="{{ item.tsCode }}"/>
     </van-cell-group>
-  </cover-view>
-</cover-view>
+  </view>
+</view>

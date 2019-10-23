@@ -5,7 +5,7 @@
   </view>
 
   <view class="full-width trend-type-part">
-    <van-tabs catchchange="onTrendTypeChange">
+    <van-tabs catchchange="onTrendTypeChange" active="{{ trendType }}">
       <van-tab title="PB" name="PB" />
       <van-tab title="PE" name="PE" />
       <van-tab title="营业收入" name="REVENUE" />

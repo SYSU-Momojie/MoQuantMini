@@ -30,7 +30,8 @@ Page({
   onLoad: function (options) {
     this.resetData(options.tsCode, options.t)
     this.initChart();
-    setTimeout(this.requestData.bind(this), 200);
+    console.log(this.data);
+    setTimeout(this.requestData.bind(this), 1000);
   },
 
   resetData: function(tsCode, trendType) {
@@ -129,15 +130,6 @@ Page({
         trendType: this.getRequestTrend(),
       };
       
-      var resp = {
-        errMsg: 'request:ok',
-        data: {
-          x: ['01', '02', '03', '01', '02', '03', '01', '02', '03'],
-          vl1: [0.123, 0.223, 0.3, 0.1, 0.2, 0.3, 0.1, 0.2, 0.3],
-          vl2: [0.223, 0.33, 0.4, 0.2, 0.3, 0.4, 0.2, 0.1, 0.2]
-        }
-      };
-      // this.updateChart(resp);
       api.post('getTrendByCode', param, this.updateAfterRequest.bind(this));
     }
   },
@@ -186,6 +178,9 @@ Page({
           axisLabel: {
             fontSize: 10,
           }
+        }, 
+        {
+          show: false
         }
       ];
       series = [
@@ -194,6 +189,10 @@ Page({
           type: 'line',
           yAxis: 0,
           data: format.truncArr(data.vl1.slice(s))
+        },
+        {
+          type: 'line',
+          data: []
         }
       ];
     } else if (this.needQuartOrYear()) {
@@ -217,6 +216,7 @@ Page({
             },
             fontSize: 10,
           },
+          show: true
         }
       ];
       series = [
@@ -263,14 +263,12 @@ Page({
   },
 
   formatTooltip: function (paramList) {
-    console.log(paramList);
     var text = '';
     if (paramList.length > 0) {
       text += `${paramList[0].axisValueLabel}\n`;
     }
     for (var i = 0; i < paramList.length; i++) {
       var param = paramList[i];
-      console.log(param);
       var value = param.value;
       var vstr;
       if (this.needQuartOrYear()) {
