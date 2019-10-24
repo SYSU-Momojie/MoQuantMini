@@ -53,7 +53,7 @@ Component({
    * 生命周期
    */
   lifetimes: {
-    attached: function() {
+    ready: function() {
       this.requestData();
     }
   },
@@ -63,16 +63,10 @@ Component({
       var param = {
         pageNum: this.data.pageNum,
         pageSize: this.data.pageSize,
-        g: false,
-        peg: false
+        orderBy: this.data.orderBy
       };
-      if (this.data.orderBy === 'g') {
-        param.g = true;
-      } else if (this.data.orderBy === 'peg') {
-        param.peg = true;
-      }
       this.showSpin();
-      api.post('getPageList', param, this.updateList.bind(this))
+      api.post('getGrowList', param, this.updateList.bind(this))
     },
 
     updateList: function(resp) {
@@ -105,8 +99,10 @@ Component({
       var to = event.currentTarget.dataset.order;
       if (to !== this.data.orderBy) {
         this.setData({orderBy: to});
-        this.requestData();
+      } else {
+        this.setData({orderBy: ''});
       }
+      this.requestData();
     },
 
     showSpin: function() {

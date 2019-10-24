@@ -1,1 +1,5 @@
 /**index.wxss**/
+
+.list-part {
+  margin-top: 20px;
+}

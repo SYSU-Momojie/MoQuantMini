@@ -1,9 +1,17 @@
 <!--index.wxml-->
 <view class="page-container">
-  <view class="full-width search-part van-hairline--bottom">
+  <view class="full-width search-part">
     <mq-share-search catchchooseShare="onShareChosen"/>
   </view>
+
+  <view class="full-width list-type-part">
+    <van-tabs catchchange="onListTypeChange">
+      <van-tab title="成长股" name="grow" />
+      <van-tab title="价值股" name="value" disabled/>
+    </van-tabs>
+  </view>
+
   <view class="full-width list-part">
-    <mq-increase-list catchchooseShare="onShareChosen"/>
+    <mq-grow-list catchchooseShare="onShareChosen" wx:if="{{ listType === 'grow' }}"/>
   </view>
 </view>

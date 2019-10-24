@@ -7,8 +7,16 @@ Page({
     motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    listType: 'grow'
   },
+
+  onListTypeChange: function(event) {
+    this.setData({
+      listType: event.detail.name
+    })
+  },
+
   onLoad: function () {
     if (app.globalData.userInfo) {
       this.setData({
