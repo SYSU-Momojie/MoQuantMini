@@ -45,6 +45,7 @@
     "van-tab": "vant-weapp/tab",
     "van-tabs": "vant-weapp/tabs",
     "van-collapse": "vant-weapp/collapse",
-    "van-collapse-item": "vant-weapp/collapse-item"
+    "van-collapse-item": "vant-weapp/collapse-item",
+    "van-divider": "vant-weapp/divider"
   }
 }

@@ -7,15 +7,27 @@
   </view>
   
   <view class="full-width form-part">
-    <van-cell custom-class="top-basic">
+    <van-cell custom-class="top-basic" value="{{ f.trunc(close) }}" >
       <view slot="title" class="top-basic-name">
         <text class="name">{{ shareName }}</text>
         <text class="code little-code">({{ tsCode }})</text>
-        <text class="close"> {{ f.trunc(close) }}</text>
       </view>
     </van-cell>
 
-    <van-cell custom-class="revenue indicator-link" is-link title="市值/PB" link-type="navigateTo" data-t='PB' catchclick="goToTrend"/>
+    <van-cell custom-class="score indicator-link" title="MQ评分" border="{{ false }}"/>
+    <van-grid column-num="3">
+      <van-grid-item use-slot custom-class="indicator-container">
+        <mq-indicator-container label="成长股" value="{{ growScore }}"/>
+      </van-grid-item>
+      <van-grid-item use-slot custom-class="indicator-container">
+        <mq-indicator-container label="价值股" value="-1.00"/>
+      </van-grid-item>
+      <van-grid-item use-slot custom-class="indicator-container">
+        <mq-indicator-container label="周期股" value="-1.00"/>
+      </van-grid-item>
+    </van-grid>
+
+    <van-cell custom-class="revenue indicator-link" is-link title="市值/PB" link-type="navigateTo" data-t='PB' catchclick="goToTrend" border="{{ false }}"/>
     <van-grid column-num="2">
       <van-grid-item use-slot custom-class="indicator-container">
         <mq-indicator-container label="市值" value="{{ marketValue }}" pattern="unit"/>
@@ -25,7 +37,7 @@
       </van-grid-item>
     </van-grid>
 
-    <van-cell custom-class="revenue indicator-link" is-link title="业绩估值" link-type="navigateTo" data-t='PE' catchclick="goToTrend"/>
+    <van-cell custom-class="revenue indicator-link" is-link title="业绩估值" link-type="navigateTo" data-t='PE' catchclick="goToTrend" border="{{ false }}"/>
     <van-grid column-num="3">
       <van-grid-item use-slot custom-class="indicator-container">
         <mq-indicator-container label="扣非PE" value="{{ dprofitPe }}" pattern="unit"/>
@@ -38,7 +50,7 @@
       </van-grid-item>
     </van-grid>
 
-    <van-cell custom-class="revenue indicator-link" is-link title="营业收入" link-type="navigateTo" data-t='REVENUE' catchclick="goToTrend"/>
+    <van-cell custom-class="revenue indicator-link" is-link title="营业收入" link-type="navigateTo" data-t='REVENUE' catchclick="goToTrend" border="{{ false }}"/>
     <van-grid column-num="4">
       <van-grid-item use-slot custom-class="indicator-container">
         <mq-indicator-container label="单季" value="{{ quarterRevenue }}" pattern="unit"/>
@@ -54,7 +66,7 @@
       </van-grid-item>
     </van-grid>
 
-    <van-cell custom-class="nprofit indicator-link" is-link title="归母净利润" link-type="navigateTo" data-t='NPROFIT' catchclick="goToTrend"/>
+    <van-cell custom-class="nprofit indicator-link" is-link title="归母净利润" link-type="navigateTo" data-t='NPROFIT' catchclick="goToTrend" border="{{ false }}"/>
     <van-grid column-num="4">
       <van-grid-item use-slot custom-class="indicator-container">
         <mq-indicator-container label="单季" value="{{ quarterNprofit }}" pattern="unit"/>
@@ -70,7 +82,7 @@
       </van-grid-item>
     </van-grid>
 
-    <van-cell custom-class="nprofit indicator-link" is-link title="归母扣非净利润" link-type="navigateTo" data-t='DPROFIT' catchclick="goToTrend"/>
+    <van-cell custom-class="nprofit indicator-link" is-link title="归母扣非净利润" link-type="navigateTo" data-t='DPROFIT' catchclick="goToTrend" border="{{ false }}"/>
     <van-grid column-num="4">
       <van-grid-item use-slot custom-class="indicator-container">
         <mq-indicator-container label="单季" value="{{ quarterDprofit }}" pattern="unit"/>

@@ -37,7 +37,8 @@ Page({
     quarterDprofitYoy: 0,
     dprofitLtm: 0,
     dprofitPe: 0,
-    dprofitPeg: 0
+    dprofitPeg: 0,
+    growScore: -1
   },
 
   requestData: function() {

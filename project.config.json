@@ -49,7 +49,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 2,
 			"list": [
 				{
 					"id": 0,
@@ -63,6 +63,13 @@
 					"name": "关于",
 					"pathName": "pages/about/index",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "详情页面",
+					"pathName": "pages/detail/index",
+					"query": "tsCode=000055.SZ",
 					"scene": null
 				}
 			]

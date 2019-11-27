@@ -14,10 +14,13 @@
 }
 
 .indicator-link {
-  margin-top: 20rpx;
   background-color: #f8f8f9;
 }
 
 .indicator-container {
   font-size: 80%;
+}
+
+.top-basic.van-cell::after {
+  left: 0px !important;
 }

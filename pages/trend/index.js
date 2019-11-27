@@ -30,7 +30,6 @@ Page({
   onLoad: function (options) {
     this.resetData(options.tsCode, options.t)
     this.initChart();
-    console.log(this.data);
     setTimeout(this.requestData.bind(this), 1000);
   },
 

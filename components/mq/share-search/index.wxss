@@ -2,7 +2,7 @@
 
 .hint {
   position: absolute;
-  top: 90rpx;
+  top: 100rpx;
   width: 100%;
 }
 

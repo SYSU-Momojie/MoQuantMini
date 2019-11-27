@@ -9,6 +9,6 @@
   "license": "MIT",
   "dependencies": {
     "miniprogram-sm-crypto": "^0.1.0",
-    "vant-weapp": "^1.0.0-beta.2"
+    "vant-weapp": "^1.0.0-beta.4"
   }
 }
