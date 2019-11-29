@@ -44,9 +44,70 @@ var format = function (num, pattern) {
   }
 }
 
+var parseDateStr = function(fmt) {
+  fmt1 = fmt.substring(0, 19);
+  var reg = getRegExp("-", "g");
+  fmt2 = fmt1.replace(reg, '/');
+  var timestamp = getDate(fmt2).getTime();
+
+  return getDate(parseInt(timestamp));
+}
+
+var shortenDate = function(str) {
+  var d = parseDateStr(str)
+  var now = getDate()
+  if (d.getDate() == now.getDate()) {
+    return dateFormat("MM:dd", d);
+  } else if (d.getFullYear() == now.getFullYear()) {
+    return dateFormat("mm-DD", d);
+  } else {
+    return dateFormat("YYYY-mm-DD", d);
+  }
+}
+
+var dateFormat = function(fmt, date) {
+  var ret;
+  var opt = [
+    ["Y+", date.getFullYear().toString()],        // 年
+    ["m+", (date.getMonth() + 1).toString()],     // 月
+    ["D+", date.getDate().toString()],            // 日
+    ["H+", date.getHours().toString()],           // 时
+    ["M+", date.getMinutes().toString()],         // 分
+    ["S+", date.getSeconds().toString()]          // 秒
+    // 有其他格式化字符需求可以继续添加，必须转化成字符串
+  ];
+  for (var i = 0 ; i < opt.length ; i++) {
+    var k = opt[i][0];
+    var v = opt[i][1]
+    ret = getRegExp("(" + k + ")").exec(fmt);
+    if (ret) {
+      fmt = fmt.replace(ret[1], v)
+    };
+  };
+  return fmt;
+}
+
+var period = function(str) {
+  var year = str.slice(0, 4);
+  var md = str.slice(4, 6);
+  var quarter = 'Q1';
+  if (md == '03') {
+    quarter = 'Q1';
+  } else if (md == '06') {
+    quarter = 'Q2';
+  } else if (md == '09') {
+    quarter = 'Q3';
+  } else if (md == '12') {
+    quarter = 'Q4';
+  }
+  return year + quarter;
+}
+
 module.exports = {
   percent: percent,
   trunc: trunc,
   unit: unit,
-  format: format
+  format: format,
+  shortenDate: shortenDate,
+  period: period
 };

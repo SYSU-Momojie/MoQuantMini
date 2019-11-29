@@ -38,7 +38,11 @@ Page({
     dprofitLtm: 0,
     dprofitPe: 0,
     dprofitPeg: 0,
-    growScore: -1
+    growScore: -1,
+    revenuePeriod: '2000Q1',
+    nprofitPeriod: '2000Q1',
+    dprofitPeriod: '2000Q1',
+    forecastReason: '',
   },
 
   requestData: function() {
@@ -48,6 +52,7 @@ Page({
   updatePage: function(resp) {
     if (resp.errMsg === 'request:ok' && resp.data instanceof Object) {
       this.setData(resp.data);
+      console.log(this.data);
     } else {
       // TODO err hint
     }

@@ -1,0 +1,21 @@
+<!--components/mq/share-note/share-note.wxml-->
+<wxs module="f" src="../../../utils/format.wxs"/>
+
+<view class="full-width">
+
+  <block wx:if="{{ list.length > 0 }}">
+    <view wx:for="{{ list }}" wx:key="tsCode" wx:for-item="item" wx:for-index="idx" catchtap="checkDetail" data-id="{{item.tsCode}}">
+      <van-panel title="{{ item.noteConclusion }}" desc="{{ f.shortenDate(item.updateTime) }}" status="">
+        <view class="note-detail">{{ item.noteDetail }}</view>
+      </van-panel>
+    </view>
+  </block>
+  <block wx:else>
+    <view class="full-width note-detail none">暂无</view>
+  </block>
+
+  <mq-page current="{{ pageNum }}" total="{{ total }}" bind:change="pageChanged" i-class="page-switch">
+    <view slot="prev"><van-icon name="arrow-left"/></view>
+    <view slot="next"><van-icon name="arrow"/></view>
+  </mq-page>
+</view>

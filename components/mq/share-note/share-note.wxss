@@ -1,0 +1,9 @@
+/* components/mq/share-note/share-note.wxss */
+
+.note-detail {
+  padding: 5rpx 20rpx;
+}
+
+.none {
+  color: #eee;
+}

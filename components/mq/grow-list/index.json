@@ -4,7 +4,6 @@
     "van-row": "vant-weapp/row",
     "van-col": "vant-weapp/col",
     "van-loading": "vant-weapp/loading",
-    "van-icon": "vant-weapp/icon",
-    "mq-page": "../page"
+    "van-icon": "vant-weapp/icon"
   }
 }

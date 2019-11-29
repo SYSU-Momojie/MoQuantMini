@@ -1,0 +1,4 @@
+<!--components/mq/bottom-divider/index.wxml-->
+<view class="full-width">
+  <van-divider hairline contentPosition="center">By Momojie</van-divider>
+</view>

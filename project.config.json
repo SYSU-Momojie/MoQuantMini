@@ -48,6 +48,10 @@
 			"currentL": -1,
 			"list": []
 		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
 		"miniprogram": {
 			"current": 2,
 			"list": [
@@ -66,7 +70,7 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 2,
 					"name": "详情页面",
 					"pathName": "pages/detail/index",
 					"query": "tsCode=000055.SZ",
