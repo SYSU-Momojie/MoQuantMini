@@ -1,5 +1,5 @@
 // pages/share-detail/index.js
-const api = require('../../utils/api.js')
+const api = require('../../../utils/api.js')
 
 Page({
 
@@ -60,7 +60,7 @@ Page({
 
   goToTrend: function(event) {
     var t = event.currentTarget.dataset.t;
-    var url = `/pages/trend/index?tsCode=${this.data.tsCode}&t=${t}`;
+    var url = `/trend-package/pages/trend/index?tsCode=${this.data.tsCode}&t=${t}`;
     console.log('Going to trend page ' + url);
     wx.navigateTo({
       url

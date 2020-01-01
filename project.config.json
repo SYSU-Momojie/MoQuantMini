@@ -58,7 +58,7 @@
 				{
 					"id": 0,
 					"name": "测试趋势",
-					"pathName": "pages/trend/index",
+					"pathName": "trend-package/pages/trend/index",
 					"query": "tsCode=000001.SZ&t=REVENUE",
 					"scene": null
 				},
@@ -73,7 +73,7 @@
 					"id": 2,
 					"name": "详情页面",
 					"pathName": "pages/detail/index",
-					"query": "tsCode=000055.SZ",
+					"query": "tsCode=000019.SZ",
 					"scene": null
 				}
 			]

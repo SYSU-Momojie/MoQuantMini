@@ -1,0 +1,26 @@
+@import "./mq-common.wxss";
+
+.col-fixed-height {
+  height: 80rpx;
+  padding: 6rpx 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+.col-header-height {
+  height: 60rpx;
+}
+
+.center {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.focus {
+  color: #1c2438;
+}
+
+.page-switch {
+  margin-top: 10rpx;
+}

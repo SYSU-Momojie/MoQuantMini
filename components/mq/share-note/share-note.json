@@ -1,4 +1,7 @@
 {
   "component": true,
-  "usingComponents": {}
+  "usingComponents": {
+    "mq-page": "/components/mq/pagination/index",
+    "van-panel": "@vant/weapp/panel"
+  }
 }

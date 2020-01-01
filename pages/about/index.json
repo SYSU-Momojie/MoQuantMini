@@ -1,4 +1,8 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "mq-bottom-divider": "/components/mq/bottom-divider/index",
+    "van-cell-group": "@vant/weapp/cell-group",
+    "van-cell": "@vant/weapp/cell"
+  },
   "navigationBarTitleText": "关于"
 }

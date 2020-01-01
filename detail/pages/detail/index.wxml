@@ -1,5 +1,5 @@
 <!--pages/share-detail/index.wxml-->
-<wxs module="f" src="../../utils/format.wxs"></wxs>
+<wxs module="f" src="../../../utils/format.wxs"></wxs>
 
 <view class="page-container">
   <view class="full-width search-part">

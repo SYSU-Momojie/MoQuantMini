@@ -1,4 +1,3 @@
-// components/mq/table/index.js
 const api = require('../../../utils/api.js')
 
 Component({
@@ -66,7 +65,7 @@ Component({
         orderBy: this.data.orderBy
       };
       this.showSpin();
-      api.post('getGrowList', param, this.updateList.bind(this))
+      api.post('getValList', param, this.updateList.bind(this))
     },
 
     updateList: function(resp) {

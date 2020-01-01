@@ -5,13 +5,14 @@
   </view>
 
   <view class="full-width list-type-part">
-    <van-tabs catchchange="onListTypeChange">
+    <van-tabs active="{{ listType }}" catchchange="onListTypeChange">
       <van-tab title="成长股" name="grow" />
-      <van-tab title="价值股" name="value" disabled/>
+      <van-tab title="价值股" name="value"/>
     </van-tabs>
   </view>
 
   <view class="full-width list-part">
     <mq-grow-list catchchooseShare="onShareChosen" wx:if="{{ listType === 'grow' }}"/>
+    <mq-val-list catchchooseShare="onShareChosen" wx:if="{{ listType === 'value' }}"/>
   </view>
 </view>

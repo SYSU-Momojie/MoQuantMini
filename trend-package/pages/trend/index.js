@@ -1,8 +1,8 @@
 // pages/trend/index.js
 
 import * as echarts from '../../components/ec-canvas/echarts';
-const api = require('../../utils/api.js');
-const format = require('../../utils/format.js');
+const api = require('../../../utils/api.js');
+const format = require('../../../utils/format.js');
 
 Page({
 
@@ -22,6 +22,7 @@ Page({
     chartDisposed: false,
     cacheData: {},
     trendPeriod: 1,
+    trendPeriodStr: '1'
   },
 
   /**
@@ -30,7 +31,6 @@ Page({
   onLoad: function (options) {
     this.resetData(options.tsCode, options.t)
     this.initChart();
-    setTimeout(this.requestData.bind(this), 1000);
   },
 
   resetData: function(tsCode, trendType) {
@@ -55,30 +55,35 @@ Page({
     this.setData({
       trendQuarter: event.detail.name,
     });
-    this.requestData();
+    if (this.data.chartInit) {
+      this.requestData();
+    }
   },
 
   onTrendTypeChange: function(event) {
-    console.log(event);
     this.setData({
       trendType: event.detail.name,
       showQuarter: this.needQuartOrYear(event.detail.name),
     });
-    this.requestData();
+    if (this.data.chartInit) {
+      this.requestData();
+    }
   },
 
   onTrendPeriodChange: function(event) {
     this.setData({
+      trendPeriodStr: event.detail.name,
       trendPeriod: parseInt(event.detail.name),
     });
-    this.requestData();
+    if (this.data.chartInit) {
+      this.requestData();
+    }
   },
 
   needQuartOrYear: function (trendTab) {
     if (trendTab === null || trendTab === undefined) {
       trendTab = this.data.trendType;
     }
-    console.log(trendTab);
     if (trendTab === 'REVENUE' || trendTab === 'NPROFIT' || trendTab === 'DPROFIT') {
       return true;
     }
@@ -112,6 +117,8 @@ Page({
     });
 
     // 注意这里一定要返回 chart 实例，否则会影响事件处理等
+    console.log('Chart Init');
+    setTimeout(this.requestData.bind(this), 1000);
     return chart;
   },
 

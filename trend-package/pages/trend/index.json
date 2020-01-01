@@ -1,8 +1,7 @@
 {
   "usingComponents": {
+    "ec-canvas": "../components/ec-canvas/ec-canvas",
     "mq-bottom-divider": "/components/mq/bottom-divider/index",
-    "mq-grow-list": "/components/mq/grow-list/index",
-    "mq-val-list": "/components/mq/val-list/index",
     "mq-share-search": "/components/mq/share-search/index",
     "van-tab": "@vant/weapp/tab",
     "van-tabs": "@vant/weapp/tabs"

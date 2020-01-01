@@ -1,5 +1,3 @@
-@import "../../miniprogram_npm/vant-weapp/common/index.wxss";
-
 .mq-table {
   width: 100%;
   text-align: center

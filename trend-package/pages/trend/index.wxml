@@ -15,14 +15,14 @@
   </view>
 
   <view class="full-width trend-quarter-part" wx:if="{{ showQuarter }}">
-    <van-tabs catchchange="onTrendQuarterChange" type="card">
+    <van-tabs catchchange="onTrendQuarterChange" type="card" active="{{ trendQuarter }}">
       <van-tab title="按季" name="QUARTER" />
       <van-tab title="按年" name="YEAR" />
     </van-tabs>
   </view>
 
   <view class="full-width trend-period-part">
-    <van-tabs catchchange="onTrendPeriodChange" type="card">
+    <van-tabs catchchange="onTrendPeriodChange" type="card" active="{{ trendPeriodStr }}">
       <van-tab title="一年" name="1" />
       <van-tab title="三年" name="3" />
       <van-tab title="五年" name="5" />

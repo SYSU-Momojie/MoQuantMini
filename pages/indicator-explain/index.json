@@ -1,4 +1,8 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "mq-bottom-divider": "/components/mq/bottom-divider/index",
+    "van-collapse": "@vant/weapp/collapse",
+    "van-collapse-item": "@vant/weapp/collapse-item"
+  },
   "navigationBarTitleText": "指标释义"
 }
