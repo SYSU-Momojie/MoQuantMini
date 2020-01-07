@@ -34,13 +34,13 @@
   },
   "subpackages": [
     {
-      "root": "trend-package",
+      "root": "p-trend",
       "pages": [
         "pages/trend/index"
       ]
     },
     {
-      "root": "detail",
+      "root": "p-detail",
       "pages": [
         "pages/detail/index"
       ]

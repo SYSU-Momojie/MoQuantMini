@@ -55,9 +55,10 @@ Page({
   },
   onShareChosen: function(event) {
     var tsCode = event.detail.tsCode;
-    console.log('share chosen')
+    var listType = this.data.listType
+    console.log(`Share chosen ${tsCode} ${listType}`)
     wx.navigateTo({
-      url: '/detail/pages/detail/index?tsCode=' + tsCode
+      url: `/p-detail/pages/detail/index?tsCode=${tsCode}&indicateType=${listType}`
     });
   }
 })

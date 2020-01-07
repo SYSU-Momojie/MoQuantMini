@@ -22,7 +22,7 @@
 		}
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.9.4",
+	"libVersion": "2.10.0",
 	"appid": "wx0e49300c42139c4a",
 	"projectname": "MoQuantMini",
 	"debugOptions": {
@@ -72,8 +72,8 @@
 				{
 					"id": 2,
 					"name": "详情页面",
-					"pathName": "pages/detail/index",
-					"query": "tsCode=000019.SZ",
+					"pathName": "p-detail/pages/detail/index",
+					"query": "tsCode=000006.SZ&indicateType=grow",
 					"scene": null
 				}
 			]

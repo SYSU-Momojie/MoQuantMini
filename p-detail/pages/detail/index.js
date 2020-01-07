@@ -1,22 +1,26 @@
-// pages/share-detail/index.js
 const api = require('../../../utils/api.js')
+const format = require('../../../utils/format.js');
+const computedBehavior = require('miniprogram-computed');
 
 Page({
+  behaviors: [computedBehavior],
 
   onLoad: function (options) {
-    if (options.tsCode === this.data.tsCode) {
-      return;
-    }
+    var sameCode = (options.tsCode === this.data.tsCode);
     this.setData({
-      tsCode: options.tsCode
+      tsCode: options.tsCode,
+      indicateType: options.indicateType
     });
-    this.requestData();
+    if (!sameCode) {
+      this.requestData();
+    }
   },
 
   /**
    * 组件的属性列表
    */
   data: {
+    indicateType: 'grow',
     tsCode: '000000.SZ',
     shareName: 'MQ基金',
     close: 1,
@@ -38,11 +42,17 @@ Page({
     dprofitLtm: 0,
     dprofitPe: 0,
     dprofitPeg: 0,
-    growScore: -1,
+    growScore: 0,
     revenuePeriod: '2000Q1',
     nprofitPeriod: '2000Q1',
     dprofitPeriod: '2000Q1',
     forecastReason: '',
+    valScore: 0,
+    dividendYields: 0,
+    dividendProfitRatio: 0,
+    receiveRisk: 0,
+    liquidityRisk: 0,
+    intangibleRisk: 0,
   },
 
   requestData: function() {
@@ -60,7 +70,7 @@ Page({
 
   goToTrend: function(event) {
     var t = event.currentTarget.dataset.t;
-    var url = `/trend-package/pages/trend/index?tsCode=${this.data.tsCode}&t=${t}`;
+    var url = `/p-trend/pages/trend/index?tsCode=${this.data.tsCode}&t=${t}`;
     console.log('Going to trend page ' + url);
     wx.navigateTo({
       url
@@ -74,6 +84,21 @@ Page({
         tsCode: tsCode
       });
       this.requestData();
+    }
+  },
+
+  onIndicateTypeChange: function(event) {
+    this.setData({
+      indicateType: event.detail.name,
+    });
+  },
+
+  computed: {
+    growTabLabel: function(data) {
+      return `成长 ${format.trunc(data.growScore)}`;
+    },
+    valTabLabel: function(data) {
+      return `价值 ${format.trunc(data.valScore)}`;
     }
   }
 

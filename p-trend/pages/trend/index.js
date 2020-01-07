@@ -193,6 +193,9 @@ Page({
         {
           name: this.data.trendType,
           type: 'line',
+          itemStyle: {
+            opacity: 0
+          },
           yAxis: 0,
           data: format.truncArr(data.vl1.slice(s))
         },
@@ -235,6 +238,9 @@ Page({
         {
           name: '增速',
           type: 'line',
+          itemStyle: {
+            opacity: 0
+          },
           yAxisIndex: 1,
           data: data.vl2.slice(s)
         },
