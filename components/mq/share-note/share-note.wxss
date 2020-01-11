@@ -1,9 +1,19 @@
 /* components/mq/share-note/share-note.wxss */
 
-.note-detail {
-  padding: 5rpx 20rpx;
+.note-conclusion {
+  padding: 30rpx 30rpx 5rpx 30rpx;
+  color: #323233;
+  font-size: 30rpx;
 }
 
 .none {
   color: #eee;
+}
+
+.share-note-header {
+  justify-content: flex-end;
+}
+
+.share-note-value {
+  flex: none;
 }

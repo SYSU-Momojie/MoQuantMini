@@ -45,6 +45,9 @@ var format = function (num, pattern) {
 }
 
 var parseDateStr = function(fmt) {
+  if (fmt == undefined) {
+    return getDate();
+  }
   fmt1 = fmt.substring(0, 19);
   var reg = getRegExp("-", "g");
   fmt2 = fmt1.replace(reg, '/');
@@ -103,11 +106,21 @@ var period = function(str) {
   return year + quarter;
 }
 
+var insertTabAfterNewLine = function(str) {
+  if (str == undefined) {
+    return '';
+  }
+  var regx = getRegExp('\n', 'g')
+  var result = str.replace(regx, '\n&emsp;&emsp;');
+  return '&emsp;&emsp;' + result;
+}
+
 module.exports = {
   percent: percent,
   trunc: trunc,
   unit: unit,
   format: format,
   shortenDate: shortenDate,
-  period: period
+  period: period,
+  insertTabAfterNewLine: insertTabAfterNewLine
 };

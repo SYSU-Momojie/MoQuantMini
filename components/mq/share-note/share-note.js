@@ -28,6 +28,14 @@ Component({
       type: Array,
       value: []
     },
+    showOverlay: {
+      type: Boolean,
+      value: false
+    },
+    chosenNote: {
+      type: Object,
+      value: {}
+    }
   },
 
   /**
@@ -87,6 +95,21 @@ Component({
         total: Math.ceil((data.total - 1) / this.data.pageSize) + 1
       })
       // this.hideSpin();
+    },
+
+    showNoteDetail: function(e) {
+      console.log(e);
+      var idx = e.target.dataset.id;
+      this.setData({
+        chosenNote: this.data.list[idx],
+        showOverlay: true
+      })
+    },
+
+    onClickHide: function() {
+      this.setData({
+        showOverlay: false
+      })
     }
   }
 })

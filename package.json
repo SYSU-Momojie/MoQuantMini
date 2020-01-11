@@ -8,7 +8,7 @@
   "author": "Momojie",
   "license": "MIT",
   "dependencies": {
-    "@vant/weapp": "^1.0.2",
+    "@vant/weapp": "^1.0.3",
     "miniprogram-computed": "^2.1.1",
     "miniprogram-sm-crypto": "^0.1.0"
   }

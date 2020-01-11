@@ -20,6 +20,7 @@ Page({
    * 组件的属性列表
    */
   data: {
+    checkChosenItem: "",
     indicateType: 'grow',
     tsCode: '000000.SZ',
     shareName: 'MQ基金',
@@ -100,6 +101,12 @@ Page({
     valTabLabel: function(data) {
       return `价值 ${format.trunc(data.valScore)}`;
     }
+  },
+
+  onCheckChosenItemChanged: function(e) {
+    this.setData({
+      checkChosenItem: e.detail
+    });
   }
 
 })

@@ -3,12 +3,23 @@
 
 <view class="full-width">
 
-  <block wx:if="{{ list.length > 0 }}">
-    <view wx:for="{{ list }}" wx:key="tsCode" wx:for-item="item" wx:for-index="idx" catchtap="checkDetail" data-id="{{item.tsCode}}">
-      <van-panel title="{{ item.noteConclusion }}" desc="{{ f.shortenDate(item.updateTime) }}" status="">
-        <view class="note-detail">{{ item.noteDetail }}</view>
+  <van-overlay show="{{ showOverlay }}" bind:click="onClickHide">
+    <van-panel use-footer-slot>
+        <view slot="header">
+          <van-cell custom-class="share-note-header" value-class="share-note-value"
+          title="{{ chosenNote.eventBrief }}" value="{{f.shortenDate(chosenNote.updateTime)}}" label="{{ chosenNote.noteConclusion }}"/>
+        </view>
+        <view class="note-conclusion">
+          <text decode>{{ f.insertTabAfterNewLine(chosenNote.noteDetail) }}</text>
+        </view>
       </van-panel>
-    </view>
+  </van-overlay>
+
+  <block wx:if="{{ list.length > 0 }}">
+    <van-cell wx:for="{{ list }}" wx:key="tsCode" wx:for-item="item" wx:for-index="idx" data-id="{{idx}}"
+     custom-class="share-note-header" value-class="share-note-value"
+     title="{{ item.eventBrief }}" value="{{f.shortenDate(item.updateTime)}}" label="{{ item.noteConclusion }}"
+     catchclick="showNoteDetail"/>
   </block>
   <block wx:else>
     <view class="full-width note-detail none">暂无</view>
