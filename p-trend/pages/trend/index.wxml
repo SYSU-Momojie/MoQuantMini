@@ -4,15 +4,31 @@
     <mq-share-search catchchooseShare="onShareChosen"/>
   </view>
 
-  <view class="full-width trend-type-part">
-    <van-tabs catchchange="onTrendTypeChange" active="{{ trendType }}">
-      <van-tab title="PB" name="PB" />
-      <van-tab title="PE" name="PE" />
-      <van-tab title="营业收入" name="REVENUE" />
-      <van-tab title="归母净利" name="NPROFIT" />
-      <van-tab title="扣非净利" name="DPROFIT" />
+  <view class="full-width trend-category-part">
+    <van-tabs catchchange="onTrendCategoryChange" active="{{ trendCategory }}">
+      <van-tab title="PB/PE" name="PBPE" />
+      <van-tab title="业绩" name="GROWTH" />
     </van-tabs>
   </view>
+
+  <block wx:if="{{ trendCategory == 'PBPE' }}">
+    <view class="full-width trend-type-part">
+      <van-tabs catchchange="onTrendTypeChange" active="{{ trendType }}">
+        <van-tab title="PB" name="PB" />
+        <van-tab title="PE" name="PE" />
+      </van-tabs>
+    </view>
+  </block>
+
+  <block wx:elif="{{ trendCategory == 'GROWTH' }}">
+    <view class="full-width trend-type-part">
+      <van-tabs catchchange="onTrendTypeChange" active="{{ trendType }}">
+        <van-tab title="营业收入" name="REVENUE" />
+        <van-tab title="归母净利" name="NPROFIT" />
+        <van-tab title="扣非净利" name="DPROFIT" />
+      </van-tabs>
+    </view>
+  </block>
 
   <view class="full-width trend-quarter-part" wx:if="{{ showQuarter }}">
     <van-tabs catchchange="onTrendQuarterChange" type="card" active="{{ trendQuarter }}">

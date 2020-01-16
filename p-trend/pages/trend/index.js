@@ -4,6 +4,34 @@ import * as echarts from '../../components/ec-canvas/echarts';
 const api = require('../../../utils/api.js');
 const format = require('../../../utils/format.js');
 
+const trendConst = {
+  'PB': {
+    'cat1': 'PBPE',
+    'cat2': 'PB',
+    'yearQuarter': false
+  },
+  'PE': {
+    'cat1': 'PBPE',
+    'cat2': 'PE',
+    'yearQuarter': false
+  },
+  'REVENUE': {
+    'cat1': 'GROWTH',
+    'cat2': 'REVENUE',
+    'yearQuarter': true
+  },
+  'NPROFIT': {
+    'cat1': 'GROWTH',
+    'cat2': 'NPROFIT',
+    'yearQuarter': true
+  },
+  'DPROFIT': {
+    'cat1': 'GROWTH',
+    'cat2': 'DPROFIT',
+    'yearQuarter': true
+  },
+};
+
 Page({
 
   /**
@@ -12,7 +40,12 @@ Page({
   data: {
     tsCode: '000000.SZ',
     shareName: 'MQ基金',
+    trendCategory: 'PBPE',
     trendType: 'PB',
+    lastTrendType: {
+      'PBPE': 'PB',
+      'GROWTH': 'REVENUE'
+    },
     showQuarter: false,
     trendQuarter: 'QUARTER',
     ec: {
@@ -36,8 +69,9 @@ Page({
   resetData: function(tsCode, trendType) {
     this.setData({
       tsCode: tsCode,
-      trendType: trendType,
-      showQuarter: this.needQuartOrYear(trendType),
+      trendCategory: trendConst[trendType].cat1,
+      trendType: trendConst[trendType].cat2,
+      showQuarter: trendConst[trendType].yearQuarter,
       cacheData: {
         'PE': { x: [], vl1: [], vl2: [], c: false },
         'PB': { x: [], vl1: [], vl2: [], c: false },
@@ -53,7 +87,18 @@ Page({
 
   onTrendQuarterChange: function(event) {
     this.setData({
-      trendQuarter: event.detail.name,
+      trendQuarter: event.detail.name
+    });
+    if (this.data.chartInit) {
+      this.requestData();
+    }
+  },
+
+  onTrendCategoryChange: function(event) {
+    var cat = event.detail.name;
+    this.setData({
+      trendCategory: cat,
+      trendType: this.data.lastTrendType[cat]
     });
     if (this.data.chartInit) {
       this.requestData();
@@ -61,9 +106,14 @@ Page({
   },
 
   onTrendTypeChange: function(event) {
+    console.log(event);
+    var trend = trendConst[event.detail.name];
+    var lastTrendType = this.data.lastTrendType;
+    lastTrendType[trend.cat1] = trend.cat2;
     this.setData({
-      trendType: event.detail.name,
-      showQuarter: this.needQuartOrYear(event.detail.name),
+      trendType: trend.cat2,
+      showQuarter: trend.yearQuarter,
+      lastTrendType: lastTrendType
     });
     if (this.data.chartInit) {
       this.requestData();

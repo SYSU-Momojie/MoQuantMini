@@ -58,7 +58,7 @@
 				{
 					"id": 0,
 					"name": "测试趋势",
-					"pathName": "trend-package/pages/trend/index",
+					"pathName": "p-trend/pages/trend/index",
 					"query": "tsCode=000001.SZ&t=REVENUE",
 					"scene": null
 				},
