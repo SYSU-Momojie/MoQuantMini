@@ -86,17 +86,13 @@
 
     <block wx:elif="{{ indicateType == 'value'}}">
       <van-cell custom-class="revenue indicator-link" is-link title="市值/PB" link-type="navigateTo" data-t='PB' catchclick="goToTrend" border="{{ false }}"/>
-      <van-grid column-num="2">
+      <van-grid column-num="4">
         <van-grid-item use-slot custom-class="indicator-container">
           <mq-indicator-container label="市值" value="{{ marketValue }}" pattern="unit"/>
         </van-grid-item>
         <van-grid-item use-slot custom-class="indicator-container">
           <mq-indicator-container label="PB" value="{{ pb }}"/>
         </van-grid-item>
-      </van-grid>
-      
-      <van-cell custom-class="revenue indicator-link" is-link title="业绩估值" link-type="navigateTo" data-t='PE' catchclick="goToTrend" border="{{ false }}"/>
-      <van-grid column-num="2">
         <van-grid-item use-slot custom-class="indicator-container">
           <mq-indicator-container label="扣非PE" value="{{ dprofitPe }}" pattern="unit"/>
         </van-grid-item>
@@ -112,6 +108,22 @@
         </van-grid-item>
         <van-grid-item use-slot custom-class="indicator-container">
           <mq-indicator-container label="分红率" value="{{ dividendProfitRatio }}" pattern="percent"/>
+        </van-grid-item>
+      </van-grid>
+
+      <van-cell custom-class="revenue indicator-link" is-link title="杜邦分析" link-type="navigateTo" data-t='PE' catchclick="goToTrend" border="{{ false }}"/>
+      <van-grid column-num="4">
+        <van-grid-item use-slot custom-class="indicator-container">
+          <mq-indicator-container label="ROE" value="{{ roe }}" pattern="percent"/>
+        </van-grid-item>
+        <van-grid-item use-slot custom-class="indicator-container">
+          <mq-indicator-container label="净利率" value="{{ dprofitMargin }}" pattern="percent"/>
+        </van-grid-item>
+        <van-grid-item use-slot custom-class="indicator-container">
+          <mq-indicator-container label="周转率" value="{{ turnoverRate }}" pattern="percent"/>
+        </van-grid-item>
+        <van-grid-item use-slot custom-class="indicator-container">
+          <mq-indicator-container label="权益乘数" value="{{ equityMultiplier }}" pattern="percent"/>
         </van-grid-item>
       </van-grid>
     </block>

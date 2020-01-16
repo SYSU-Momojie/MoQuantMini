@@ -28,8 +28,7 @@
     </van-col>
   </van-row>
 
-  <mq-page current="{{ pageNum }}" total="{{ total }}" bind:change="pageChanged" i-class="page-switch">
-    <view slot="prev"><van-icon name="arrow-left"/></view>
-    <view slot="next"><van-icon name="arrow"/></view>
-  </mq-page>
+  <block wx:if="{{ total > 1 }}">
+    <mq-page current="{{ pageNum }}" total="{{ total }}" bind:change="pageChanged" i-class="page-switch"/>
+  </block>
 </view>

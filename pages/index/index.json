@@ -1,4 +1,5 @@
 {
+  "navigationBarTitleText": "小股池",
   "usingComponents": {
     "mq-bottom-divider": "/components/mq/bottom-divider/index",
     "mq-grow-list": "/components/mq/grow-list/index",
