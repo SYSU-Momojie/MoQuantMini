@@ -101,7 +101,7 @@
         </van-grid-item>
       </van-grid>
 
-      <van-cell custom-class="revenue indicator-link" is-link title="分红" link-type="navigateTo" data-t='PE' catchclick="goToTrend" border="{{ false }}"/>
+      <van-cell custom-class="revenue indicator-link" is-link title="分红" link-type="navigateTo" data-t='DIVIDEND' catchclick="goToTrend" border="{{ false }}"/>
       <van-grid column-num="2">
         <van-grid-item use-slot custom-class="indicator-container">
           <mq-indicator-container label="股息率" value="{{ dividendYields }}" pattern="percent"/>
@@ -111,7 +111,7 @@
         </van-grid-item>
       </van-grid>
 
-      <van-cell custom-class="revenue indicator-link" is-link title="杜邦分析" link-type="navigateTo" data-t='PE' catchclick="goToTrend" border="{{ false }}"/>
+      <van-cell custom-class="revenue indicator-link" is-link title="杜邦分析" link-type="navigateTo" data-t='ROE' catchclick="goToTrend" border="{{ false }}"/>
       <van-grid column-num="4">
         <van-grid-item use-slot custom-class="indicator-container">
           <mq-indicator-container label="ROE" value="{{ roe }}" pattern="percent"/>

@@ -7,28 +7,47 @@ const format = require('../../../utils/format.js');
 const trendConst = {
   'PB': {
     'cat1': 'PBPE',
-    'cat2': 'PB',
     'yearQuarter': false
   },
   'PE': {
     'cat1': 'PBPE',
-    'cat2': 'PE',
     'yearQuarter': false
   },
   'REVENUE': {
     'cat1': 'GROWTH',
-    'cat2': 'REVENUE',
     'yearQuarter': true
   },
   'NPROFIT': {
     'cat1': 'GROWTH',
-    'cat2': 'NPROFIT',
     'yearQuarter': true
   },
   'DPROFIT': {
     'cat1': 'GROWTH',
-    'cat2': 'DPROFIT',
     'yearQuarter': true
+  },
+  'DIVIDEND': {
+    'cat1': 'DIVIDEND',
+    'yearQuarter': false
+  },
+  'DIVIDEND_PROFIT': {
+    'cat1': 'DIVIDEND',
+    'yearQuarter': false
+  },
+  'ROE': {
+    'cat1': 'DUPONT',
+    'yearQuarter': false
+  },
+  'DPROFIT_MARGIN': {
+    'cat1': 'DUPONT',
+    'yearQuarter': false
+  },
+  'TURNOVER_RATE': {
+    'cat1': 'DUPONT',
+    'yearQuarter': false
+  },
+  'EM': {
+    'cat1': 'DUPONT',
+    'yearQuarter': false
   },
 };
 
@@ -44,7 +63,9 @@ Page({
     trendType: 'PB',
     lastTrendType: {
       'PBPE': 'PB',
-      'GROWTH': 'REVENUE'
+      'GROWTH': 'REVENUE',
+      'DIVIDEND': 'DIVIDEND',
+      'DUPONT': 'ROE',
     },
     showQuarter: false,
     trendQuarter: 'QUARTER',
@@ -54,8 +75,8 @@ Page({
     chartInit: false,
     chartDisposed: false,
     cacheData: {},
-    trendPeriod: 1,
-    trendPeriodStr: '1'
+    trendPeriod: 5,
+    trendPeriodStr: '5'
   },
 
   /**
@@ -70,7 +91,7 @@ Page({
     this.setData({
       tsCode: tsCode,
       trendCategory: trendConst[trendType].cat1,
-      trendType: trendConst[trendType].cat2,
+      trendType: trendType,
       showQuarter: trendConst[trendType].yearQuarter,
       cacheData: {
         'PE': { x: [], vl1: [], vl2: [], c: false },
@@ -81,6 +102,12 @@ Page({
         'NPROFIT_QUARTER': { x: [], vl1: [], vl2: [], c: false },
         'DPROFIT_YEAR': { x: [], vl1: [], vl2: [], c: false },
         'DPROFIT_QUARTER': { x: [], vl1: [], vl2: [], c: false },
+        'DIVIDEND': { x: [], vl1: [], vl2: [], c: false },
+        'DIVIDEND_PROFIT': { x: [], vl1: [], vl2: [], c: false },
+        'ROE': { x: [], vl1: [], vl2: [], c: false },
+        'DPROFIT_MARGIN': { x: [], vl1: [], vl2: [], c: false },
+        'TURNOVER_RATE': { x: [], vl1: [], vl2: [], c: false },
+        'EM': { x: [], vl1: [], vl2: [], c: false }
       },
     });
   },
@@ -96,9 +123,12 @@ Page({
 
   onTrendCategoryChange: function(event) {
     var cat = event.detail.name;
+    var trendType = this.data.lastTrendType[cat];
+    var trend = trendConst[trendType];
     this.setData({
-      trendCategory: cat,
-      trendType: this.data.lastTrendType[cat]
+      trendCategory: trend.cat1,
+      trendType: trendType,
+      showQuarter: trend.yearQuarter
     });
     if (this.data.chartInit) {
       this.requestData();
@@ -107,11 +137,12 @@ Page({
 
   onTrendTypeChange: function(event) {
     console.log(event);
-    var trend = trendConst[event.detail.name];
+    var trendType = event.detail.name;
+    var trend = trendConst[trendType];
     var lastTrendType = this.data.lastTrendType;
-    lastTrendType[trend.cat1] = trend.cat2;
+    lastTrendType[trend.cat1] = trendType;
     this.setData({
-      trendType: trend.cat2,
+      trendType: trendType,
       showQuarter: trend.yearQuarter,
       lastTrendType: lastTrendType
     });
@@ -134,10 +165,8 @@ Page({
     if (trendTab === null || trendTab === undefined) {
       trendTab = this.data.trendType;
     }
-    if (trendTab === 'REVENUE' || trendTab === 'NPROFIT' || trendTab === 'DPROFIT') {
-      return true;
-    }
-    return false;
+    var trend = trendConst[trendTab];
+    return trend.yearQuarter;
   },
 
   initChart: function() {
@@ -226,7 +255,8 @@ Page({
     var yList = [];
     var series = [];
     var showX = false;
-    if (this.data.trendType === 'PB' || this.data.trendType === 'PE') {
+    var trend = trendConst[this.data.trendType]
+    if (trend.cat1 === 'PBPE') {
       yList = [
         {
           name: this.data.trendType,
@@ -250,11 +280,14 @@ Page({
           data: format.truncArr(data.vl1.slice(s))
         },
         {
+          name: '',
+          yAxisIndex: 1,
           type: 'line',
-          data: []
+          data: [],
+          showSymbol: false
         }
       ];
-    } else if (this.needQuartOrYear()) {
+    } else if (trend.cat1 === 'GROWTH') {
       yList = [
         {
           name: this.convertTrendTypeToLabel(this.data.trendType),
@@ -295,6 +328,39 @@ Page({
           data: data.vl2.slice(s)
         },
       ];
+    } else if (trend.cat1 === 'DIVIDEND' || trend.cat1 === 'DUPONT') {
+      yList = [
+        {
+          name: this.convertTrendTypeToLabel(this.data.trendType),
+          position: 'left',
+          axisLabel: {
+            formatter: function(value, index) {
+              return format.percent(value);
+            },
+            fontSize: 10,
+          }
+        },
+        {
+          show: false
+        }
+      ];
+      series = [
+        {
+          name: this.convertTrendTypeToLabel(this.data.trendType),
+          type: 'line',
+          yAxisIndex: 0,
+          data: data.vl1.slice(s),
+          itemStyle: {
+            opacity: 0
+          },
+        },
+        {
+          name: '',
+          yAxisIndex: 1,
+          type: 'line',
+          data: []
+        }
+      ];
     }
     return {
       title: {
@@ -325,6 +391,7 @@ Page({
   },
 
   formatTooltip: function (paramList) {
+    var trend = trendConst[this.data.trendType]
     var text = '';
     if (paramList.length > 0) {
       text += `${paramList[0].axisValueLabel}\n`;
@@ -333,10 +400,12 @@ Page({
       var param = paramList[i];
       var value = param.value;
       var vstr;
-      if (this.needQuartOrYear()) {
+      if (trend.cat1 === 'GROWTH') {
         vstr = i === 0 ? format.unit(value) : format.percent(value);
-      } else {
+      } else if (trend.cat1 === 'PBPE') {
         vstr = value.toString();
+      } else if (trend.cat1 === 'DIVIDEND' || trend.cat1 === 'DUPONT') {
+        vstr = format.percent(value);
       }
       text += `${param.seriesName}: ${vstr}\n`;
     }
@@ -354,7 +423,19 @@ Page({
       return '归母净利';
     } else if (trendType === 'DPROFIT') {
       return '扣非净利';
-    }
+    } else if (trendType === 'DIVIDEND') {
+      return '股息率';
+    } else if (trendType === 'DIVIDEND_PROFIT') {
+      return '分红率';
+    } else if (trendType === 'ROE') {
+      return 'ROE';
+    } else if (trendType === 'DPROFIT_MARGIN') {
+      return '净利率';
+    } else if (trendType === 'TURNOVER_RATE') {
+      return '周转率';
+    } else if (trendType === 'EM') {
+      return '权益乘数';
+    } 
     return '错啦';
   },
 
