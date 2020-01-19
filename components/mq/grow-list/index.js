@@ -1,7 +1,8 @@
 // components/mq/table/index.js
-const api = require('../../../utils/api.js')
+const apiBehavior = require('../../../behaviors/api.js');
 
 Component({
+  behaviors: [apiBehavior],
   options: {},
   /**
    * 组件的属性列表
@@ -31,10 +32,6 @@ Component({
       type: String,
       value: ''
     },
-    spinShow: {
-      type: Boolean,
-      value: false
-    }
   },
 
   /**
@@ -65,18 +62,14 @@ Component({
         pageSize: this.data.pageSize,
         orderBy: this.data.orderBy
       };
-      this.showSpin();
-      api.post('getGrowList', param, this.updateList.bind(this))
+      this.post('getGrowList', param, this.updateList.bind(this))
     },
 
-    updateList: function(resp) {
-      console.log(resp)
-      var data = resp.data;
+    updateList: function(data) {
       this.setData({
         list: data.list,
         total: Math.ceil(data.total / this.data.pageSize)
       })
-      this.hideSpin();
     },
 
     pageChanged: function({
@@ -103,14 +96,6 @@ Component({
         this.setData({orderBy: ''});
       }
       this.requestData();
-    },
-
-    showSpin: function() {
-      this.setData({ spinShow: true});
-    },
-
-    hideSpin: function() {
-      this.setData({ spinShow: false });
     },
 
     checkDetail: function(event) {

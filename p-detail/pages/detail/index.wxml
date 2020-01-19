@@ -1,13 +1,17 @@
 <!--pages/share-detail/index.wxml-->
 <wxs module="f" src="../../../utils/format.wxs"></wxs>
 
+<van-notify id="van-notify" />
+
 <view class="page-container">
+
   <view class="full-width search-part">
     <mq-share-search catchchooseShare="onShareChosen"/>
   </view>
+  <van-loading type="spinner" wx:if="{{ spinShow }}"/>
   
   <view class="full-width form-part">
-    <van-notice-bar wx:if="{{ forecastReason.length > 0 }}" text="{{ forecastReason }}" color="rgb(25, 137, 250)" backgroundColor="rgb(236, 249, 255)"/>
+    <mq-forecast-notify tsCode="{{ tsCode }}"/>
     <van-cell custom-class="top-basic" value="{{ f.trunc(close) }}" >
       <view slot="title" class="top-basic-name">
         <text class="name">{{ shareName }}</text>

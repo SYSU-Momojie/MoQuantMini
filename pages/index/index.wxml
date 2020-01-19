@@ -1,4 +1,5 @@
 <!--index.wxml-->
+<van-notify id="van-notify" />
 <view class="page-container">
   <view class="full-width search-part">
     <mq-share-search catchchooseShare="onShareChosen"/>

@@ -1,6 +1,7 @@
-const api = require('../../../utils/api.js')
+const api = require('../../../behaviors/api.js')
 
 Component({
+  behaviors: [api],
   options: {},
   /**
    * 组件的属性列表
@@ -65,12 +66,10 @@ Component({
         orderBy: this.data.orderBy
       };
       this.showSpin();
-      api.post('getValList', param, this.updateList.bind(this))
+      this.post('getValList', param, this.updateList.bind(this))
     },
 
-    updateList: function(resp) {
-      console.log(resp)
-      var data = resp.data;
+    updateList: function(data) {
       this.setData({
         list: data.list,
         total: Math.ceil(data.total / this.data.pageSize)

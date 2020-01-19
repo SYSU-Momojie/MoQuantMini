@@ -6,6 +6,7 @@
     "mq-val-list": "/components/mq/val-list/index",
     "mq-share-search": "/components/mq/share-search/index",
     "van-tab": "@vant/weapp/tab",
-    "van-tabs": "@vant/weapp/tabs"
+    "van-tabs": "@vant/weapp/tabs",
+    "van-notify": "@vant/weapp/notify"
   }
 }

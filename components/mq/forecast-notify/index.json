@@ -1,0 +1,11 @@
+{
+  "component": true,
+  "usingComponents": {
+    "van-overlay": "@vant/weapp/overlay",
+    "van-tag": "@vant/weapp/tag",
+    "van-cell-group": "@vant/weapp/cell-group",
+    "van-cell": "@vant/weapp/cell",
+    "van-notice-bar": "@vant/weapp/notice-bar",
+    "van-panel": "@vant/weapp/panel"
+  }
+}

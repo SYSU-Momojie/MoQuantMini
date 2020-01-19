@@ -1,9 +1,10 @@
 // components/mq/share-search/index.js
-const api = require('../../../utils/api.js')
+const api = require('../../../behaviors/api.js')
 const dateUtil = require('../../../utils/date.js')
 const strUtil = require('../../../utils/string.js')
 
 Component({
+  behaviors: [api],
   /**
    * 组件的属性列表
    */
@@ -27,7 +28,7 @@ Component({
   },
 
   lifetimes: {
-    ready: function() {
+    ready: function () {
       var data = wx.getStorageSync('allShare');
       var dt = wx.getStorageSync('allShareDt');
       if (data && dt && dt === dateUtil.getDt()) {
@@ -35,7 +36,7 @@ Component({
           shareList: data
         });
       } else {
-        api.post('getAllShareForSearch', {}, this.updateAfterRequest.bind(this));
+        this.post('getAllShareForSearch', {}, this.updateAfterRequest.bind(this));
       }
       var latest = wx.getStorageSync('searchLatest');
       if (latest) {
@@ -50,11 +51,11 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    onChange: function(event) {
+    onChange: function (event) {
       // console.log(event);
       this.showHint(event.detail);
     },
-    showHint: function(str) {
+    showHint: function (str) {
       var toFind = [];
       if (str === null || str === undefined || str.length === 0) {
         toFind = this.data.latest;
@@ -62,8 +63,8 @@ Component({
         toFind.push(str)
       }
       var nHintList = [];
-      for (var i = 0 ; i < toFind.length ; i++) {
-        for (var j = 0 ; j < this.data.shareList.length ; j++) {
+      for (var i = 0; i < toFind.length; i++) {
+        for (var j = 0; j < this.data.shareList.length; j++) {
           if (strUtil.ignoreCaseContains(this.data.shareList[j].tsCode, toFind[i]) ||
             strUtil.ignoreCaseContains(this.data.shareList[j].py, toFind[i])) {
             nHintList.push(this.data.shareList[j]);
@@ -81,18 +82,19 @@ Component({
       });
       console.log(this.data.hintList);
     },
-    onBlur: function(event) {
+    onBlur: function (event) {
       // this.clearHint();
       setTimeout(this.clearHint.bind(this), 100);
     },
-    onFocus: function(event) {
+    onFocus: function (event) {
       this.showHint();
     },
-    clearHint: function() {
+    clearHint: function () {
       this.setData({ hintList: [] });
     },
     handleTap: function (event) {
       console.log(event);
+      this.clearHint();
       var code = event.currentTarget.dataset.id;
       var latest = this.data.latest;
       var index = latest.indexOf(code);
@@ -113,23 +115,18 @@ Component({
       });
       this.triggerEvent('chooseShare', { tsCode: code });
     },
-    updateAfterRequest: function(resp) {
-      if (resp.errMsg === 'request:ok' && resp.data instanceof Array) {
-        var list = resp.data;
-        this.setData({
-          shareList: list,
-        });
-        wx.setStorage({
-          key: 'allShare',
-          data: list,
-        });
-        wx.setStorage({
-          key: 'allShareDt',
-          data: dateUtil.getDt(),
-        });
-      } else {
-
-      }
+    updateAfterRequest: function (list) {
+      this.setData({
+        shareList: list,
+      });
+      wx.setStorage({
+        key: 'allShare',
+        data: list,
+      });
+      wx.setStorage({
+        key: 'allShareDt',
+        data: dateUtil.getDt(),
+      });
     }
   }
 })

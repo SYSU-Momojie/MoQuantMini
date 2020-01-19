@@ -1,0 +1,20 @@
+<wxs module="f" src="../../../utils/format.wxs" />
+
+<view class="full-width">
+    <van-overlay show="{{ showForecastDetail }}" catchclick="toHideForecastDetail" z-index="2">
+      <van-cell title="报告期" value="{{ f.period(period) }}" />
+      <van-cell title="扣非净利" value="{{ f.unit(dprofit) }}"/>
+      <van-cell title="变动原因" label="{{ forecastReason }}"/>
+      <van-cell wx:if="{{ adjustReason.length > 0 }}" label="{{ adjustReason }}">
+        <view slot="title">
+          <view class="van-cell-text">人工调整</view>
+          <van-tag type="danger" wx:if="{{ oneTime }}">不可持续</van-tag>
+        </view>
+      </van-cell>
+    </van-overlay>
+
+    <block wx:if="{{ latest }}">
+      <van-notice-bar text="{{ forecastReason }}" color="rgb(25, 137, 250)" backgroundColor="rgb(236, 249, 255)"
+                      catchclick='toShowForecastDetail' />
+    </block>
+  </view>

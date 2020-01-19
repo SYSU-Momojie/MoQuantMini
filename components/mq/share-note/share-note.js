@@ -1,9 +1,9 @@
 // components/mq/share-note/share-note.js
-const api = require('../../../utils/api.js')
+const api = require('../../../behaviors/api.js')
 const computedBehavior = require('miniprogram-computed')
 
 Component({
-  behaviors: [computedBehavior],
+  behaviors: [computedBehavior, api],
   /**
    * 组件的属性列表
    */
@@ -50,7 +50,6 @@ Component({
 
   watch: {
     'tsCode': function(newTsCode) {
-      console.log(this.data.tsCode);
       if (this.data.tsCode != '000000.SZ') {
         setTimeout(this.requestData.bind(this), 100);
       }
@@ -67,8 +66,7 @@ Component({
         pageSize: this.data.pageSize,
         tsCode: this.data.tsCode
       };
-      // this.showSpin();
-      api.post('getNoteList', param, this.updateList.bind(this))
+      this.post('getNoteList', param, this.updateList.bind(this))
     },
 
     pageChanged: function ({
@@ -87,14 +85,11 @@ Component({
       this.requestData();
     },
 
-    updateList: function (resp) {
-      console.log(resp)
-      var data = resp.data;
+    updateList: function (data) {
       this.setData({
         list: data.list,
         total: Math.ceil((data.total - 1) / this.data.pageSize) + 1
       })
-      // this.hideSpin();
     },
 
     showNoteDetail: function(e) {

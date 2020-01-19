@@ -1,0 +1,6 @@
+/* components/mq/forecast-notify/index.wxss */
+
+.van-cell-text {
+  display: initial;
+  margin-right: 20rpx;
+}

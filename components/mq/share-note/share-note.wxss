@@ -8,6 +8,7 @@
 
 .none {
   color: #eee;
+  padding-left: 30rpx;
 }
 
 .share-note-header {

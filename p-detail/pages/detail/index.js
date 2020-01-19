@@ -1,9 +1,9 @@
-const api = require('../../../utils/api.js')
 const format = require('../../../utils/format.js');
 const computedBehavior = require('miniprogram-computed');
+const apiBehavior = require('../../../behaviors/api.js');
 
 Page({
-  behaviors: [computedBehavior],
+  behaviors: [computedBehavior, apiBehavior],
 
   onLoad: function (options) {
     var sameCode = (options.tsCode === this.data.tsCode);
@@ -47,7 +47,6 @@ Page({
     revenuePeriod: '2000Q1',
     nprofitPeriod: '2000Q1',
     dprofitPeriod: '2000Q1',
-    forecastReason: '',
     valScore: 0,
     dividendYields: 0,
     dividendProfitRatio: 0,
@@ -57,16 +56,11 @@ Page({
   },
 
   requestData: function() {
-    api.post('getLatestByCode', this.data.tsCode, this.updatePage.bind(this));
+    this.post('getLatestByCode', this.data.tsCode, this.updatePage.bind(this));
   },
 
-  updatePage: function(resp) {
-    if (resp.errMsg === 'request:ok' && resp.data instanceof Object) {
-      this.setData(resp.data);
-      console.log(this.data);
-    } else {
-      // TODO err hint
-    }
+  updatePage: function(data) {
+    this.setData(data);
   },
 
   goToTrend: function(event) {
@@ -107,6 +101,18 @@ Page({
     this.setData({
       checkChosenItem: e.detail
     });
-  }
+  },
+
+  toShowForecastDetail: function(e) {
+    this.setData({
+      showForecastDetail: true
+    });
+  },
+
+  toHideForecastDetail: function(e) {
+    this.setData({
+      showForecastDetail: false
+    });
+  },
 
 })

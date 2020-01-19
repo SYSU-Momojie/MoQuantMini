@@ -1,7 +1,7 @@
 // pages/trend/index.js
 
 import * as echarts from '../../components/ec-canvas/echarts';
-const api = require('../../../utils/api.js');
+const api = require('../../../behaviors/api.js');
 const format = require('../../../utils/format.js');
 
 const trendConst = {
@@ -53,6 +53,10 @@ const trendConst = {
 
 Page({
 
+  behaviors: [
+    api
+  ],
+
   /**
    * 页面的初始数据
    */
@@ -87,12 +91,15 @@ Page({
     this.initChart();
   },
 
-  resetData: function(tsCode, trendType) {
+  resetData: function (tsCode, trendType) {
+    var trend = trendConst[trendType];
+    var lastTrendType = this.data.lastTrendType;
+    lastTrendType[trend.cat1] = trendType;
     this.setData({
       tsCode: tsCode,
-      trendCategory: trendConst[trendType].cat1,
+      trendCategory: trend.cat1,
       trendType: trendType,
-      showQuarter: trendConst[trendType].yearQuarter,
+      showQuarter: trend.yearQuarter,
       cacheData: {
         'PE': { x: [], vl1: [], vl2: [], c: false },
         'PB': { x: [], vl1: [], vl2: [], c: false },
@@ -112,7 +119,7 @@ Page({
     });
   },
 
-  onTrendQuarterChange: function(event) {
+  onTrendQuarterChange: function (event) {
     this.setData({
       trendQuarter: event.detail.name
     });
@@ -121,7 +128,7 @@ Page({
     }
   },
 
-  onTrendCategoryChange: function(event) {
+  onTrendCategoryChange: function (event) {
     var cat = event.detail.name;
     var trendType = this.data.lastTrendType[cat];
     var trend = trendConst[trendType];
@@ -135,7 +142,7 @@ Page({
     }
   },
 
-  onTrendTypeChange: function(event) {
+  onTrendTypeChange: function (event) {
     console.log(event);
     var trendType = event.detail.name;
     var trend = trendConst[trendType];
@@ -151,7 +158,7 @@ Page({
     }
   },
 
-  onTrendPeriodChange: function(event) {
+  onTrendPeriodChange: function (event) {
     this.setData({
       trendPeriodStr: event.detail.name,
       trendPeriod: parseInt(event.detail.name),
@@ -169,17 +176,17 @@ Page({
     return trend.yearQuarter;
   },
 
-  initChart: function() {
+  initChart: function () {
     if (this.data.chartInit) {
       this.requestData();
-      return ;
+      return;
     }
 
     var chartComponent = this.selectComponent('#mychart-dom-bar');
     chartComponent.init(this.initCallback.bind(this));
   },
 
-  initCallback: function(canvas, width, height) {
+  initCallback: function (canvas, width, height) {
     // 获取组件的 canvas、width、height 后的回调函数
     // 在这里初始化图表
     const chart = echarts.init(canvas, null, {
@@ -201,10 +208,10 @@ Page({
     return chart;
   },
 
-  requestData: function() {
+  requestData: function () {
     if (!this.data.chartInit) {
       console.log("not ready");
-      return ;
+      return;
     }
 
     if (this.data.cacheData[this.getRequestTrend()].c === true) {
@@ -214,43 +221,37 @@ Page({
         tsCode: this.data.tsCode,
         trendType: this.getRequestTrend(),
       };
-      
-      api.post('getTrendByCode', param, this.updateAfterRequest.bind(this));
+
+      this.post('getTrendByCode', param, this.updateAfterRequest.bind(this));
     }
   },
 
-  getRequestTrend: function() {
+  getRequestTrend: function () {
     return this.data.trendType + (this.needQuartOrYear() ? '_' + this.data.trendQuarter : '');
   },
 
-  updateAfterRequest: function(resp) {
-    if (resp.errMsg === 'request:ok' && resp.data instanceof Object) {
-      console.log(resp.data);
-      var data = resp.data;
-      if (data.x.length === 0) {
-        //
-        return ;
-      }
-      data.c = true;
-      var cacheData = this.data.cacheData;
-      cacheData[this.getRequestTrend()] = data;
-      this.setData({
-        cacheData
-      });
-      this.updateChart(this.data.cacheData[this.getRequestTrend()]);
-    } else {
-      // TODO err hint
+  updateAfterRequest: function (data) {
+    if (data.x.length === 0) {
+      //
+      return;
     }
+    data.c = true;
+    var cacheData = this.data.cacheData;
+    cacheData[this.getRequestTrend()] = data;
+    this.setData({
+      cacheData
+    });
+    this.updateChart(this.data.cacheData[this.getRequestTrend()]);
   },
 
-  updateChart: function(data) {
-      console.log(data);
-      var options = this.getChartOption(data);
-      console.log(options);
-      this.chart.setOption(options);
+  updateChart: function (data) {
+    console.log(data);
+    var options = this.getChartOption(data);
+    console.log(options);
+    this.chart.setOption(options);
   },
 
-  getChartOption: function(data) {
+  getChartOption: function (data) {
     var s = this.startIndex(data.x);
     var yList = [];
     var series = [];
@@ -264,7 +265,7 @@ Page({
           axisLabel: {
             fontSize: 10,
           }
-        }, 
+        },
         {
           show: false
         }
@@ -293,7 +294,7 @@ Page({
           name: this.convertTrendTypeToLabel(this.data.trendType),
           position: 'left',
           axisLabel: {
-            formatter: function(value, index) {
+            formatter: function (value, index) {
               return format.unit(value);
             },
             fontSize: 10,
@@ -334,7 +335,7 @@ Page({
           name: this.convertTrendTypeToLabel(this.data.trendType),
           position: 'left',
           axisLabel: {
-            formatter: function(value, index) {
+            formatter: function (value, index) {
               return format.percent(value);
             },
             fontSize: 10,
@@ -412,7 +413,7 @@ Page({
     return text;
   },
 
-  convertTrendTypeToLabel: function(trendType) {
+  convertTrendTypeToLabel: function (trendType) {
     if (trendType === 'PE') {
       return 'PE';
     } else if (trendType === 'PB') {
@@ -435,18 +436,18 @@ Page({
       return '周转率';
     } else if (trendType === 'EM') {
       return '权益乘数';
-    } 
+    }
     return '错啦';
   },
 
-  startIndex: function(x) {
+  startIndex: function (x) {
     if (this.data.trendPeriod === 0) {
       return 0;
     }
     var dStr = x[x.length - 1];
     var year = parseInt(dStr.substr(0, 4)) - this.data.trendPeriod;
     var targetX = year + dStr.substr(4);
-    for (var i = 0 ; i < x.length ; i++) {
+    for (var i = 0; i < x.length; i++) {
       if (x[i] >= targetX) {
         return i;
       }
@@ -454,7 +455,7 @@ Page({
     return x.length;
   },
 
-  onShareChosen: function(event) {
+  onShareChosen: function (event) {
     var tsCode = event.detail.tsCode;
     if (tsCode !== this.data.tsCode) {
       this.resetData(tsCode, this.data.trendType);
@@ -510,7 +511,7 @@ Page({
 
   },
 
-  dispose: function() {
+  dispose: function () {
     console.log("dispose");
     if (this.chartDisposed) {
       return;

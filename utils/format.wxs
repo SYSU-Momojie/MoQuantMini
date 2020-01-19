@@ -91,6 +91,9 @@ var dateFormat = function(fmt, date) {
 }
 
 var period = function(str) {
+  if (!str || str.length < 6) {
+    return '';
+  }
   var year = str.slice(0, 4);
   var md = str.slice(4, 6);
   var quarter = 'Q1';
