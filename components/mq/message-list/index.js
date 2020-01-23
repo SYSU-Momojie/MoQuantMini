@@ -1,16 +1,12 @@
-const api = require('../../../behaviors/api.js')
+const api = require('../../../behaviors/api.js');
+const computedBehavior = require('miniprogram-computed');
 
 Component({
-  behaviors: [api],
-  options: {},
+  behaviors: [api, computedBehavior],
   /**
    * 组件的属性列表
    */
   properties: {
-    fixedColNum: {
-      type: Number,
-      value: 4
-    },
     pageNum: {
       type: Number,
       value: 1
@@ -25,26 +21,14 @@ Component({
     },
     list: {
       type: Array,
-      value: [{tsCode: '000001.SZ'}]
+      value: []
     },
-    orderBy: {
-      type: String,
-      value: ''
+    msgType: {
+      type: Number,
+      value: 1
     }
   },
-
-  /**
-   * 组件的初始数据
-   */
-  data: {},
-
-  /**
-   * 组件的方法列表
-   */
-  methods: {
-
-  },
-
+  
   /**
    * 生命周期
    */
@@ -54,14 +38,34 @@ Component({
     }
   },
 
+  /**
+   * 组件的初始数据
+   */
+  data: {
+
+  },
+
+  watch: {
+    'msgType': function(newMsgType) {
+      this.setData({
+        pageNum: 1
+      });
+      setTimeout(this.requestData.bind(this), 100);
+    }
+  },
+
+  /**
+   * 组件的方法列表
+   */
   methods: {
+
     requestData: function() {
       var param = {
         pageNum: this.data.pageNum,
         pageSize: this.data.pageSize,
-        orderBy: this.data.orderBy
+        msgType: this.data.msgType
       };
-      this.post('getValList', param, this.updateList.bind(this))
+      this.post('getLatestReportList', param, this.updateList.bind(this))
     },
 
     updateList: function(data) {
@@ -87,20 +91,8 @@ Component({
       this.requestData();
     },
 
-    orderChanged: function(event) {
-      var to = event.currentTarget.dataset.order;
-      if (to !== this.data.orderBy) {
-        this.setData({orderBy: to});
-      } else {
-        this.setData({orderBy: ''});
-      }
-      this.requestData();
-    },
-
     checkDetail: function(event) {
       this.triggerEvent('chooseShare', { tsCode: event.currentTarget.dataset.id });
     }
   }
-
-
 })

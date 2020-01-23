@@ -1,0 +1,23 @@
+<wxs module="f" src="../../../utils/format.wxs"/>
+
+<view class="mq-table">
+  <van-loading type="spinner" wx:if="{{ spinShow }}"/>
+
+  <van-row custom-class="mq-table-header mq-table-row">
+      <van-col span="20" custom-class="col-header-height">#</van-col>
+      <van-col span="4" data-order="peg" catchtap="orderChanged" custom-class="col-header-height {{ orderBy == 'dvr' ? 'focus' : '' }}">日期</van-col>
+  </van-row>
+
+  <van-row custom-class="mq-table-content mq-table-row mq-table-row-{{idx%2}}" wx:for="{{ list }}" wx:key="tsCode" wx:for-item="item" wx:for-index="idx" catchtap="checkDetail" data-id="{{item.tsCode}}">
+    <van-col span="20" custom-class="text-left">
+      <text class='msg-list-font'>{{ item.message }}</text>
+    </van-col>
+    <van-col span="4">
+      <div class="center msg-list-font col-fixed-height">{{ f.dtFormat(item.pubDate) }}</div>
+    </van-col>
+  </van-row>
+
+  <block wx:if="{{ total > 1 }}">
+    <mq-page current="{{ pageNum }}" total="{{ total }}" bind:change="pageChanged" i-class="page-switch"/>
+  </block>
+</view>

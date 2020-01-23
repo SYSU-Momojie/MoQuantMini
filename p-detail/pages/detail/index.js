@@ -7,6 +7,9 @@ Page({
 
   onLoad: function (options) {
     var sameCode = (options.tsCode === this.data.tsCode);
+    if (options.indicateType == undefined) {
+      options.indicateType = 'grow';
+    }
     this.setData({
       tsCode: options.tsCode,
       indicateType: options.indicateType

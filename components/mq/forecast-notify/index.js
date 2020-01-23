@@ -33,19 +33,16 @@ Component({
     },
     oneTime: {
       type: Boolean,
-      value: ''
+      value: false
     },
     dprofit: {
       type: Number,
       value: 0
-    }
-  },
-
-  lifetimes: {
-    attached: function() {
-      console.log('forecast-notify loaded');
-      console.log(this.data.tsCode);
     },
+    fromManual: {
+      type: Boolean,
+      value: false
+    }
   },
 
   /**

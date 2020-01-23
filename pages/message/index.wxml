@@ -1,0 +1,15 @@
+<!--index.wxml-->
+<van-notify id="van-notify" />
+<view class="page-container">
+
+  <view class="full-width list-type-part">
+    <van-tabs active="{{ msgType }}" catchchange="onMsgTypeChange">
+      <van-tab title="业绩" name="1" />
+      <van-tab title="分红" name="2" disabled/>
+    </van-tabs>
+  </view>
+
+  <view class="full-width list-part">
+    <mq-message-list catchchooseShare="onShareChosen" wx:if="{{ msgType === '1' }}"/>
+  </view>
+</view>

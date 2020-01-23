@@ -4,7 +4,7 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": false,
+		"urlCheck": true,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
@@ -74,6 +74,13 @@
 					"name": "详情页面",
 					"pathName": "p-detail/pages/detail/index",
 					"query": "tsCode=300552.SZ&indicateType=grow",
+					"scene": null
+				},
+				{
+					"id": 3,
+					"name": "新料",
+					"pathName": "pages/message/index",
+					"query": "",
 					"scene": null
 				}
 			]

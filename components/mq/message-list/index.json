@@ -1,0 +1,9 @@
+{
+  "component": true,
+  "usingComponents": {
+    "mq-page": "/components/mq/pagination/index",
+    "van-row": "@vant/weapp/row",
+    "van-col": "@vant/weapp/col",
+    "van-loading": "@vant/weapp/loading"
+  }
+}

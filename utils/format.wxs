@@ -118,6 +118,21 @@ var insertTabAfterNewLine = function(str) {
   return '&emsp;&emsp;' + result;
 }
 
+var dtFormat = function(str) {
+  if (str == undefined) {
+    return '';
+  }
+  var year = str.substring(0, 4);
+  var month = str.substring(4, 6);
+  var day = str.substring(6, 8);
+  var now = getDate()
+  if (now.getFullYear().toString() === year) {
+    return month + '-' + day;
+  } else {
+    return year.substring(2, 4) + '-' + month + '-' + day;
+  }
+}
+
 module.exports = {
   percent: percent,
   trunc: trunc,
@@ -125,5 +140,6 @@ module.exports = {
   format: format,
   shortenDate: shortenDate,
   period: period,
-  insertTabAfterNewLine: insertTabAfterNewLine
+  insertTabAfterNewLine: insertTabAfterNewLine,
+  dtFormat: dtFormat
 };

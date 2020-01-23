@@ -1,0 +1,5 @@
+@import "../mq-common-list.wxss";
+
+.msg-list-font {
+  font-size: 85%;
+}

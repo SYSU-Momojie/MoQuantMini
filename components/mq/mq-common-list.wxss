@@ -17,6 +17,11 @@
   flex-direction: column;
 }
 
+.text-left {
+  text-align: left;
+  padding-left: 10rpx;
+}
+
 .focus {
   color: #1c2438;
 }

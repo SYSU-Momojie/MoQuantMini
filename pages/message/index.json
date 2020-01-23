@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "有料到",
+  "usingComponents": {
+    "mq-bottom-divider": "/components/mq/bottom-divider/index",
+    "mq-message-list": "/components/mq/message-list/index",
+    "van-tab": "@vant/weapp/tab",
+    "van-tabs": "@vant/weapp/tabs",
+    "van-notify": "@vant/weapp/notify"}
+}

@@ -1,7 +1,7 @@
 import Notify from '@vant/weapp/notify/notify';
 
-const api_host = 'http://localhost:9874/mq_api/'
-// const api_host = 'https://nemomojie.com/mq_api/'
+// const api_host = 'http://localhost:9874/mq_api/'
+const api_host = 'https://nemomojie.com/mq_api/'
 
 module.exports = Behavior({
   properties: {

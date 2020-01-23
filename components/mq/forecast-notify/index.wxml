@@ -2,13 +2,22 @@
 
 <view class="full-width">
     <van-overlay show="{{ showForecastDetail }}" catchclick="toHideForecastDetail" z-index="2">
-      <van-cell title="报告期" value="{{ f.period(period) }}" />
-      <van-cell title="扣非净利" value="{{ f.unit(dprofit) }}"/>
+      <van-cell value="{{ f.period(period) }}" >
+        <view slot="title">
+          <view class="van-cell-text">报告期</view>
+          <van-tag type="primary" wx:if="{{ fromManual }}">人工导入</van-tag>
+        </view>
+      </van-cell>
+      <van-cell value="{{ f.unit(dprofit) }}">
+        <view slot="title">
+          <view class="van-cell-text">扣非净利</view>
+          <van-tag type="danger" wx:if="{{ oneTime }}">不可持续</van-tag>
+        </view>
+      </van-cell>
       <van-cell title="变动原因" label="{{ forecastReason }}"/>
       <van-cell wx:if="{{ adjustReason.length > 0 }}" label="{{ adjustReason }}">
         <view slot="title">
           <view class="van-cell-text">人工调整</view>
-          <van-tag type="danger" wx:if="{{ oneTime }}">不可持续</van-tag>
         </view>
       </van-cell>
     </van-overlay>

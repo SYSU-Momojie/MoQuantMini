@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/message/index",
     "pages/about/index"
   ],
   "window": {
@@ -19,6 +20,14 @@
         "selectedColor": "#32B632",
         "iconPath": "icons/list.png",
         "selectedIconPath": "icons/list-act.png"
+      },
+      {
+        "pagePath": "pages/message/index",
+        "text": "新料",
+        "color": "#323233",
+        "selectedColor": "#32B632",
+        "iconPath": "icons/msg.png",
+        "selectedIconPath": "icons/msg-act.png"
       },
       {
         "pagePath": "pages/about/index",
