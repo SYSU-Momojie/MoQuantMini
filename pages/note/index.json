@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "股评日记",
+  "usingComponents": {
+    "mq-share-note": "/components/mq/share-note/share-note"
+  }
+}

@@ -6,6 +6,7 @@
     "van-collapse": "@vant/weapp/collapse",
     "van-collapse-item": "@vant/weapp/collapse-item",
     "van-cell": "@vant/weapp/cell",
-    "van-overlay": "@vant/weapp/overlay"
+    "van-overlay": "@vant/weapp/overlay",
+    "van-tag": "@vant/weapp/tag"
   }
 }

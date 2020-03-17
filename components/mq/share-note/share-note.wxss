@@ -19,3 +19,10 @@
   flex: none;
 }
 
+.share-list {
+  margin-top: 10rpx;
+}
+
+.share-item {
+  margin-right: 5rpx;
+}

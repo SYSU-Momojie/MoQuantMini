@@ -1,0 +1,56 @@
+<view>
+  <van-cell-group>
+    <van-field
+      clearable
+      type="number"
+      label="起始价格"
+      placeholder="第一笔买入价格"
+      data-k="startPrice"
+      catchchange="onChange"
+    />
+    <van-field
+      clearable
+      type="number"
+      label="最低价格"
+      placeholder="预计最后一笔买入价格"
+      data-k="endPrice"
+      catchchange="onChange"
+    />
+    <van-field
+      clearable
+      type="number"
+      label="止盈价格"
+      placeholder="预计最后止盈价格"
+      data-k="earnPrice"
+      catchchange="onChange"
+    />
+    <van-field
+      clearable
+      type="number"
+      label="网格数量"
+      placeholder="预计第一份之后分多少次买入"
+      data-k="gridNum"
+      catchchange="onChange"
+    />
+
+    <van-field
+      clearable
+      type="number"
+      label="第一笔"
+      placeholder="买入金额或仓位"
+      data-k="firstBuy"
+      catchchange="onChange"
+    />
+    <van-field
+      clearable
+      type="number"
+      label="网格买入"
+      placeholder="买入金额或仓位"
+      data-k="gridBuy"
+      catchchange="onChange"
+    />
+  </van-cell-group>
+
+  <van-button type="info" catchclick="calculate" block>计算</van-button>
+  
+</view>

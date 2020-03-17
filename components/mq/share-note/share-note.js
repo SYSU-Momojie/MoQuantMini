@@ -88,7 +88,8 @@ Component({
     updateList: function (data) {
       this.setData({
         list: data.list,
-        total: Math.ceil((data.total - 1) / this.data.pageSize) + 1
+        total: Math.max(Math.floor(data.total / this.data.pageSize),
+          Math.ceil(data.total / this.data.pageSize))
       })
     },
 

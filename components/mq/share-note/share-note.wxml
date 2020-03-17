@@ -16,10 +16,22 @@
   </van-overlay>
 
   <block wx:if="{{ list.length > 0 }}">
-    <van-cell wx:for="{{ list }}" wx:key="tsCode" wx:for-item="item" wx:for-index="idx" data-id="{{idx}}"
-     custom-class="share-note-header" value-class="share-note-value"
-     title="{{ item.eventBrief }}" value="{{f.shortenDate(item.updateTime)}}" label="{{ item.noteConclusion }}"
-     catchclick="showNoteDetail"/>
+    <van-cell wx:for="{{ list }}" wx:key="tsCode" wx:for-item="item" wx:for-index="idx" data-id="{{idx}}" custom-class="share-note-header" value-class="share-note-value" title="{{ item.eventBrief }}" value="{{f.shortenDate(item.updateTime)}}" use-label-slot catchclick="showNoteDetail">
+      <view slot="label">
+        <text>{{ item.noteConclusion }}</text>
+        <view class="share-list" wx:if="{{ tsCode == 'all' && item.relatedShareList.length > 0 }}">
+          <van-tag type="primary" round wx:if="{{ item.relatedShareList.length > 0 }}" custom-class="share-item">
+            {{ item.relatedShareList[0].shareName }}
+          </van-tag>
+          <van-tag type="primary" round wx:if="{{ item.relatedShareList.length > 1 }}" custom-class="share-item">
+            {{ item.relatedShareList[1].shareName }}
+          </van-tag>
+          <van-tag type="primary" round wx:if="{{ item.relatedShareList.length > 2 }}">
+            ...
+          </van-tag>
+        </view>
+      </view>
+    </van-cell>
   </block>
   <block wx:else>
     <view class="full-width note-detail none">暂无</view>

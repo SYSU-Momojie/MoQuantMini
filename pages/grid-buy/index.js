@@ -1,4 +1,4 @@
-// pages/about/index.js
+// pages/grid-buy/index.js
 Page({
 
   /**
@@ -61,5 +61,20 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+  onChange: function(e) {
+    var newData = {};
+    newData[e.target.dataset.k] = Number(e.detail);
+    this.setData(newData);
+  },
+
+  calculate: function() {
+    console.log(this.data);
+  
+  },
+
+  checkInput: function(field, hint) {
+    
   }
 })

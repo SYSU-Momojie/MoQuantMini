@@ -1,0 +1,3 @@
+<view>
+  <mq-share-note tsCode="{{ toShow }}"/>
+</view>

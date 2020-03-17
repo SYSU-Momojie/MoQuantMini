@@ -2,7 +2,9 @@
   "pages": [
     "pages/index/index",
     "pages/message/index",
-    "pages/about/index"
+    "pages/about/index",
+    "pages/note/index",
+    "pages/grid-buy/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -30,6 +32,14 @@
         "selectedIconPath": "icons/msg-act.png"
       },
       {
+        "pagePath": "pages/note/index",
+        "text": "日记",
+        "color": "#323233",
+        "selectedColor": "#32B632",
+        "iconPath": "icons/note.png",
+        "selectedIconPath": "icons/note-act.png"
+      },
+      {
         "pagePath": "pages/about/index",
         "text": "关于",
         "color": "#323233",
@@ -39,8 +49,7 @@
       }
     ]
   },
-  "usingComponents": {
-  },
+  "usingComponents": {},
   "subpackages": [
     {
       "root": "p-trend",

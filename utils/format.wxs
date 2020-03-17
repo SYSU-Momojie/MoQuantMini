@@ -60,7 +60,7 @@ var shortenDate = function(str) {
   var d = parseDateStr(str)
   var now = getDate()
   if (d.getDate() == now.getDate()) {
-    return dateFormat("MM:dd", d);
+    return dateFormat("HH:MM", d);
   } else if (d.getFullYear() == now.getFullYear()) {
     return dateFormat("mm-DD", d);
   } else {

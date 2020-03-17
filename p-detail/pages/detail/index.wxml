@@ -143,6 +143,12 @@
         <van-collapse-item title="商誉风险" name="3" value="{{ f.percent(intangibleRisk) }}">
           (商誉+开发支出+无形资产)/(净资产-优先股-永续债)
         </van-collapse-item>
+        <van-collapse-item title="存贷比" name="4" value="{{ f.percent(cashDebtRate) }}">
+          (货币资金+其他流动资产)/(短期借款+长期借款)
+        </van-collapse-item>
+        <van-collapse-item title="利润现金流比" name="5" value="{{ f.percent(nprofitToCf) }}">
+          净利润/经营活动现金流
+        </van-collapse-item>
       </van-collapse>
     </block>
 

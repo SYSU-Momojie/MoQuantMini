@@ -1,7 +1,7 @@
 <!--pages/about/index.wxml-->
 <view class="page-container">
   <view class="full-width explain-part">
-  <van-cell-group title="工具小解释">
+  <van-cell-group title="小解释">
     <van-cell
       is-link
       title="指标计算"
@@ -17,6 +17,13 @@
       title="价值股"
       link-type="navigateTo"
       url="/pages/indicator-explain/index"/>
+  </van-cell-group>
+  <van-cell-group title="小工具">
+    <van-cell
+      is-link
+      title="网格买入"
+      link-type="navigateTo"
+      url="/pages/grid-buy/index"/>
   </van-cell-group>
   </view>
 </view>
