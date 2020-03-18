@@ -1,1 +1,19 @@
 /* pages/grid-buy/index.wxss */
+@import "/components/mq/mq-common-list.wxss";
+
+.mq-table {
+  margin-top: 20rpx;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.block {
+  width: 120px;
+  height: 120px;
+  background-color: #fff;
+}

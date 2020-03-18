@@ -1,56 +1,41 @@
-<view>
-  <van-cell-group>
-    <van-field
-      clearable
-      type="number"
-      label="起始价格"
-      placeholder="第一笔买入价格"
-      data-k="startPrice"
-      catchchange="onChange"
-    />
-    <van-field
-      clearable
-      type="number"
-      label="最低价格"
-      placeholder="预计最后一笔买入价格"
-      data-k="endPrice"
-      catchchange="onChange"
-    />
-    <van-field
-      clearable
-      type="number"
-      label="止盈价格"
-      placeholder="预计最后止盈价格"
-      data-k="earnPrice"
-      catchchange="onChange"
-    />
-    <van-field
-      clearable
-      type="number"
-      label="网格数量"
-      placeholder="预计第一份之后分多少次买入"
-      data-k="gridNum"
-      catchchange="onChange"
-    />
+<wxs module="f" src="../../utils/format.wxs"/>
 
-    <van-field
-      clearable
-      type="number"
-      label="第一笔"
-      placeholder="买入金额或仓位"
-      data-k="firstBuy"
-      catchchange="onChange"
-    />
-    <van-field
-      clearable
-      type="number"
-      label="网格买入"
-      placeholder="买入金额或仓位"
-      data-k="gridBuy"
-      catchchange="onChange"
-    />
+
+<view>
+  <van-overlay show="{{ spinShow }}" bind:click="onClickHide">
+    <view class="wrapper">
+      <view class="block">
+        <van-loading type="spinner"/>
+      </view>
+    </view>
+  </van-overlay>
+  
+
+  <van-cell-group>
+    <van-field clearable type="number" label="起始价格" placeholder="第一笔买入价格" data-k="startPrice" catchchange="onChange" error-message="{{startPriceErr}}" value="{{startPrice}}"/>
+    <van-field clearable type="number" label="最低价格" placeholder="预计最后一笔买入价格" data-k="endPrice" catchchange="onChange" error-message="{{endPriceErr}}" value="{{endPrice}}"/>
+    <van-field clearable type="number" label="止盈价格" placeholder="预计最后止盈价格" data-k="earnPrice" catchchange="onChange" error-message="{{earnPriceErr}}" value="{{earnPrice}}"/>
+    <van-field clearable type="number" label="网格数量" placeholder="预计第一份之后分多少次买入" data-k="gridNum" catchchange="onChange" error-message="{{gridNumErr}}" value="{{gridNum}}"/>
+    <van-field clearable type="number" label="第一笔" placeholder="买入金额或仓位" data-k="firstBuy" catchchange="onChange" error-message="{{firstBuyErr}}" value="{{firstBuy}}"/>
+    <van-field clearable type="number" label="网格买入" placeholder="买入金额或仓位" data-k="gridBuy" catchchange="onChange" error-message="{{firstBuyErr}}" value="{{gridBuy}}"/>
   </van-cell-group>
 
   <van-button type="info" catchclick="calculate" block>计算</van-button>
+
+  <view class="mq-table" wx:if="{{ gridRows.length > 0 }}">
+    <van-row custom-class="mq-table-header mq-table-row">
+        <van-col span="6" custom-class="col-header-height">价格</van-col>
+        <van-col span="6" custom-class="col-header-height">投入</van-col>
+        <van-col span="6" custom-class="col-header-height">目前浮亏</van-col>
+        <van-col span="6" custom-class="col-header-height">最后浮盈</van-col>
+    </van-row>
+
+    <van-row custom-class="mq-table-content mq-table-row mq-table-row-{{idx%2}}" wx:for="{{ gridRows }}" wx:key="price" wx:for-item="item" wx:for-index="idx">
+      <van-col span="6" custom-class="col-fixed-height">{{ f.trunc(item.price) }}</van-col>
+      <van-col span="6" custom-class="col-fixed-height">{{ f.trunc(item.cost) }}</van-col>
+      <van-col span="6" custom-class="col-fixed-height">{{ f.percent(item.lossPercent) }}</van-col>
+      <van-col span="6" custom-class="col-fixed-height">{{ f.percent(item.earn) }}</van-col>
+    </van-row>
+  </view>
   
 </view>

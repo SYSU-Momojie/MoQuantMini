@@ -4,7 +4,9 @@
     "van-field": "@vant/weapp/field",
     "van-button": "@vant/weapp/button",
     "van-row": "@vant/weapp/row",
-    "van-col": "@vant/weapp/col"
+    "van-col": "@vant/weapp/col",
+    "van-loading": "@vant/weapp/loading",
+    "van-overlay": "@vant/weapp/overlay"
   },
   "navigationBarTitleText": "网格买入"
 }

@@ -5,6 +5,14 @@ Page({
    * 页面的初始数据
    */
   data: {
+    gridRows: [],
+    spinShow: false,
+    startPrice: 2800,
+    endPrice: 2550,
+    earnPrice: 3000,
+    gridNum: 10,
+    firstBuy: 50000,
+    gridBuy: 10000
   },
 
   /**
@@ -70,11 +78,104 @@ Page({
   },
 
   calculate: function() {
+    this.spinDisplay(true);
+    this.clearGrid();
     console.log(this.data);
-  
+
+    var allCheck = true;
+    var list = ['startPrice', 'endPrice', 'earnPrice', 'gridNum', 'firstBuy', 'gridBuy'];
+    for (var k in list) {
+      allCheck = this.checkInput(list[k]) && allCheck;
+    }
+
+    if (!allCheck) {
+      this.spinDisplay(false);
+      return ;
+    }
+
+    if (this.data['startPrice'] <= this.data['endPrice']) {
+      this.setData({
+        startPriceErr: '需大于最低价'
+      });
+      this.spinDisplay(false);
+      return ;
+    }
+
+    var row0 = {
+      price: this.data.startPrice,
+      cost: 0,
+      mv: 0,
+      loss: 0,
+      lossPercent: 0,
+      earn: 0
+    };
+
+    var rows = [row0];
+    var nowPrice = this.data.startPrice;
+    var gridPrice = (this.data.startPrice - this.data.endPrice) / this.data.gridNum;
+    
+    while (nowPrice >= this.data.endPrice) {
+      var lastRow = rows[rows.length - 1];
+      var price = nowPrice;
+      var thisLoss = (lastRow.price - price) / lastRow.price * lastRow.mv;
+      var thisCost = rows.length === 1 ? this.data.firstBuy : this.data.gridBuy;
+      var cost = lastRow.cost + thisCost;
+      var mv = lastRow.mv - thisLoss + thisCost;
+      var loss = lastRow.loss + thisLoss;
+      var lossPercent = loss / cost;
+      var row = {
+        price: price,
+        cost: cost,
+        mv: mv,
+        loss: loss,
+        lossPercent: lossPercent,
+        earn: 0
+      };
+      this.calEarn(row);
+      rows.push(row);
+
+      nowPrice = nowPrice - gridPrice;
+    }
+
+    rows.shift();
+    this.setData({
+      gridRows: rows
+    });
+    this.spinDisplay(false);
   },
 
-  checkInput: function(field, hint) {
-    
+  calEarn: function(row) {
+    var final = this.data.earnPrice;
+    var now = row.price;
+    var earn = (final - now) / now * row.mv;
+    row.earn = (earn - row.loss) / row.cost;
+  },
+
+  checkInput: function(field) {
+    var errKey = field + 'Err';
+    var newData = {};
+    if (!(field in this.data) || this.data[field] === '') {
+      newData[errKey] = '必填';
+    } else if (this.data[field] === NaN) {
+      newData[errKey] = '非数字';
+    } else if (this.data[field] < 0) {
+      newData[errKey] = '非负数';
+    } else {
+      newData[errKey] = '';
+    }
+    this.setData(newData);
+    return newData[errKey] === '';
+  },
+
+  clearGrid: function() {
+    this.setData({
+      gridRows: []
+    });
+  },
+
+  spinDisplay: function(b) {
+    this.setData({
+      spinShow: b
+    });
   }
 })
