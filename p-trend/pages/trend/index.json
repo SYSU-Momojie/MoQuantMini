@@ -1,7 +1,7 @@
 {
   "navigationBarTitleText": "指标变动",
   "usingComponents": {
-    "ec-canvas": "../components/ec-canvas/ec-canvas",
+    "ec-canvas": "../../components/ec-canvas/ec-canvas",
     "mq-bottom-divider": "/components/mq/bottom-divider/index",
     "mq-share-search": "/components/mq/share-search/index",
     "van-tab": "@vant/weapp/tab",

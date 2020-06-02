@@ -1,8 +1,10 @@
 // components/mq/table/index.js
 const apiBehavior = require('../../../behaviors/api.js');
+const computedBehavior = require('miniprogram-computed');
+const indicator = require('../../../utils/indicator.js');
 
 Component({
-  behaviors: [apiBehavior],
+  behaviors: [apiBehavior, computedBehavior],
   options: {},
   /**
    * 组件的属性列表
@@ -52,6 +54,21 @@ Component({
   lifetimes: {
     ready: function() {
       this.requestData();
+    }
+  },
+
+  computed: {
+    pageList: function(data) {
+      var arr = [];
+      for (var i in data) {
+        arr.push({
+          tsCode: i.tsCode,
+          pe: indicator.getValueFromMap(i, 'pe'),
+          dprofitYoy: indicator.getYoyFromMap(i, 'dprofit_quarter'),
+          revenueYoy: indicator.getYoyFromMap(i, 'revenue_quarter'),
+        });
+      }
+      return arr;
     }
   },
 

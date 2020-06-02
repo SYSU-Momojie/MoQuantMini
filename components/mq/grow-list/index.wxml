@@ -10,7 +10,7 @@
       <van-col span="{{ 24 / fixedColNum }}" data-order="peg" catchtap="orderChanged" custom-class="col-header-height {{ orderBy == 'peg' ? 'focus' : '' }}">PEG</van-col>
   </van-row>
 
-  <van-row custom-class="mq-table-content mq-table-row mq-table-row-{{idx%2}}" wx:for="{{ list }}" wx:key="tsCode" wx:for-item="item" wx:for-index="idx" catchtap="checkDetail" data-id="{{item.tsCode}}">
+  <van-row custom-class="mq-table-content mq-table-row mq-table-row-{{idx%2}}" wx:for="{{ pageList }}" wx:key="tsCode" wx:for-item="item" wx:for-index="idx" catchtap="checkDetail" data-id="{{item.tsCode}}">
     <van-col span="{{ 24 / fixedColNum }}" custom-class="col-fixed-height">
       <view style="flex-direction:column;">
         <text>{{ item.shareName }}</text>
@@ -18,13 +18,13 @@
       </view>
     </van-col>
     <van-col span="{{ 24 / fixedColNum }}" custom-class="col-fixed-height">
-      <div class="center">{{ f.trunc(item.dprofitPe) }}</div>
+      <div class="center">{{ f.trunc(item.pe) }}</div>
     </van-col>
     <van-col span="{{ 24 / fixedColNum }}" custom-class="col-fixed-height">
-      <div class="center">{{ f.percent(item.quarterDprofitYoy) }} </div>
+      <div class="center">{{ f.percent(item.dprofitYoy) }} </div>
     </van-col>
     <van-col span="{{ 24 / fixedColNum }}" custom-class="col-fixed-height">
-      <div class="center">{{ f.trunc(item.dprofitPeg) }}</div>
+      <div class="center">{{ f.trunc(item.revenueYoy) }}</div>
     </van-col>
   </van-row>
 

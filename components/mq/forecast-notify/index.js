@@ -1,5 +1,5 @@
 const api = require('../../../behaviors/api.js');
-const computedBehavior = require('miniprogram-computed')
+const computedBehavior = require('miniprogram-computed');
 
 Component({
   behaviors: [computedBehavior, api],
