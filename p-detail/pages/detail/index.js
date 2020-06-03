@@ -1,6 +1,7 @@
 const format = require('../../../utils/format.js');
 const computedBehavior = require('miniprogram-computed');
 const apiBehavior = require('../../../behaviors/api.js');
+const indicator = require('../../../utils/indicator.js');
 
 Page({
   behaviors: [computedBehavior, apiBehavior],
@@ -53,9 +54,15 @@ Page({
     valScore: 0,
     dividendYields: 0,
     dividendProfitRatio: 0,
+    pepb: 0,
+    roe: 0,
+    dprofitMargin: 0,
+    turnoverRate: 0,
+    equityMultiplier: 0,
     receiveRisk: 0,
     liquidityRisk: 0,
     intangibleRisk: 0,
+    cashDebtRate: 0,
   },
 
   requestData: function() {
@@ -63,7 +70,47 @@ Page({
   },
 
   updatePage: function(data) {
-    this.setData(data);
+    var daily = data.dailyIndicators;
+    var quarter = data.quarterIndicators;
+    var shareInfo = {
+      tsCode: data.tsCode,
+      shareName: data.shareName,
+      close: indicator.getValueFromMap(daily, 'close'),
+      marketValue: indicator.getValueFromMap(daily, 'total_mv'),
+      pb: indicator.getValueFromMap(daily, 'pb'),
+      revenue: indicator.getValueFromMap(quarter, 'revenue'),
+      revenueYoy: indicator.getYoyFromMap(quarter, 'revenue'),
+      quarterRevenue: indicator.getValueFromMap(quarter, 'revenue_quarter'),
+      quarterRevenueYoy: indicator.getYoyFromMap(quarter, 'revenue_quarter'),
+      nprofit: indicator.getValueFromMap(quarter, 'nprofit'),
+      nprofitYoy: indicator.getYoyFromMap(quarter, 'nprofit'),
+      quarterNprofit: indicator.getValueFromMap(quarter, 'nprofit_quarter'),
+      quarterNprofitYoy: indicator.getYoyFromMap(quarter, 'nprofit_quarter'),
+      nprofitLtm: indicator.getValueFromMap(quarter, 'nprofit_ltm'),
+      dprofit: indicator.getValueFromMap(quarter, 'dprofit'),
+      dprofitYoy: indicator.getYoyFromMap(quarter, 'dprofit'),
+      quarterDprofit: indicator.getValueFromMap(quarter, 'dprofit_quarter'),
+      quarterDprofitYoy: indicator.getYoyFromMap(quarter, 'dprofit_quarter'),
+      dprofitLtm: indicator.getValueFromMap(quarter, 'dprofit_ltm'),
+      dprofitPe: indicator.getValueFromMap(daily, 'pe'),
+      dprofitPeg: indicator.getValueFromMap(daily, 'peg'),
+      growScore: indicator.getValueFromMap(daily, 'grow_score'),
+      revenuePeriod: '2000Q1',
+      nprofitPeriod: '2000Q1',
+      dprofitPeriod: '2000Q1',
+      valScore: indicator.getValueFromMap(daily, 'val_score'),
+      dividendYields: indicator.getValueFromMap(daily, 'dividend_yields'),
+      dividendProfitRatio: indicator.getValueFromMap(quarter, 'dividend_ratio'),
+      roe: indicator.getValueFromMap(quarter, 'roe'),
+      dprofitMargin: indicator.getValueFromMap(quarter, 'dprofit_margin'),
+      turnoverRate: indicator.getValueFromMap(quarter, 'turnover_rate'),
+      equityMultiplier: indicator.getValueFromMap(quarter, 'equity_multiplier'),
+      receiveRisk: indicator.getValueFromMap(quarter, 'receive_risk'),
+      liquidityRisk: indicator.getValueFromMap(quarter, 'liquidity_risk'),
+      intangibleRisk: indicator.getValueFromMap(quarter, 'intangible_risk'),
+      cashDebtRate: indicator.getValueFromMap(quarter, 'cash_debt_rate'),
+    };
+    this.setData(shareInfo);
   },
 
   goToTrend: function(event) {

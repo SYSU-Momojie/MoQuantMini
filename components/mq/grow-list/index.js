@@ -60,15 +60,36 @@ Component({
   computed: {
     pageList: function(data) {
       var arr = [];
-      for (var i in data) {
+      for (var i in data.list) {
+        var item = data.list[i];
         arr.push({
-          tsCode: i.tsCode,
-          pe: indicator.getValueFromMap(i, 'pe'),
-          dprofitYoy: indicator.getYoyFromMap(i, 'dprofit_quarter'),
-          revenueYoy: indicator.getYoyFromMap(i, 'revenue_quarter'),
+          tsCode: item.tsCode,
+          shareName: item.shareName,
+          pe: indicator.getValueFromMap(item.dailyIndicators, 'pe'),
+          dprofitYoy: indicator.getYoyFromMap(item.quarterIndicators, 'dprofit_quarter'),
+          revenueYoy: indicator.getYoyFromMap(item.quarterIndicators, 'revenue_quarter'),
         });
       }
-      return arr;
+      if (data.orderBy !== '') {
+        arr.sort((x, y) => {
+          if (data.orderBy === 'pe') {
+            return indicator.compareLess(x.pe, y.pe);
+          } else if (data.orderBy === 'dprofit') {
+            return indicator.compareLarger(x.dprofitYoy, y.dprofitYoy);
+          } else if (data.orderBy === 'revenue') {
+            return indicator.compareLarger(x.revenueYoy, y.revenueYoy);
+          }
+          return 0;
+        })
+      }
+
+      var startIndex = data.pageSize * (data.pageNum - 1);
+      var endIndex = startIndex + data.pageSize;
+      if (endIndex > arr.length) {
+        endIndex = arr.length;
+      }
+
+      return arr.slice(startIndex, endIndex);
     }
   },
 
@@ -102,7 +123,6 @@ Component({
           pageNum: this.data.pageNum - 1
         });
       }
-      this.requestData();
     },
 
     orderChanged: function(event) {
@@ -112,7 +132,6 @@ Component({
       } else {
         this.setData({orderBy: ''});
       }
-      this.requestData();
     },
 
     checkDetail: function(event) {

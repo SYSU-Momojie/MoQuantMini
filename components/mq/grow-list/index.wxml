@@ -6,8 +6,8 @@
   <van-row custom-class="mq-table-header mq-table-row">
       <van-col span="{{ 24 / fixedColNum }}" custom-class="col-header-height">#</van-col>
       <van-col span="{{ 24 / fixedColNum }}" data-order="pe" catchtap="orderChanged" custom-class="col-header-height {{ orderBy == 'pe' ? 'focus' : '' }}">PE</van-col>
-      <van-col span="{{ 24 / fixedColNum }}" data-order="yoy" catchtap="orderChanged" custom-class="col-header-height {{ orderBy == 'yoy' ? 'focus' : '' }}">增速</van-col>
-      <van-col span="{{ 24 / fixedColNum }}" data-order="peg" catchtap="orderChanged" custom-class="col-header-height {{ orderBy == 'peg' ? 'focus' : '' }}">PEG</van-col>
+      <van-col span="{{ 24 / fixedColNum }}" data-order="dprofit" catchtap="orderChanged" custom-class="col-header-height {{ orderBy == 'dprofit' ? 'focus' : '' }}">利润</van-col>
+      <van-col span="{{ 24 / fixedColNum }}" data-order="revenue" catchtap="orderChanged" custom-class="col-header-height {{ orderBy == 'revenue' ? 'focus' : '' }}">营收</van-col>
   </van-row>
 
   <van-row custom-class="mq-table-content mq-table-row mq-table-row-{{idx%2}}" wx:for="{{ pageList }}" wx:key="tsCode" wx:for-item="item" wx:for-index="idx" catchtap="checkDetail" data-id="{{item.tsCode}}">
@@ -24,7 +24,7 @@
       <div class="center">{{ f.percent(item.dprofitYoy) }} </div>
     </van-col>
     <van-col span="{{ 24 / fixedColNum }}" custom-class="col-fixed-height">
-      <div class="center">{{ f.trunc(item.revenueYoy) }}</div>
+      <div class="center">{{ f.percent(item.revenueYoy) }}</div>
     </van-col>
   </van-row>
 

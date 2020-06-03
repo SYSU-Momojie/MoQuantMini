@@ -2,10 +2,10 @@
   "navigationBarTitleText": "个股详情",
   "usingComponents": {
     "mq-bottom-divider": "/components/mq/bottom-divider/index",
-    "mq-indicator-container": "../../components/mq/indicator-container/index",
+    "mq-indicator-container": "/components/mq/indicator-container/index",
     "mq-share-note": "/components/mq/share-note/share-note",
-    "mq-share-search": "../../components/mq/share-search/index",
-    "mq-forecast-notify": "../../components/mq/forecast-notify/index",
+    "mq-share-search": "/components/mq/share-search/index",
+    "mq-forecast-notify": "/components/mq/forecast-notify/index",
     "van-cell-group": "@vant/weapp/cell-group",
     "van-cell": "@vant/weapp/cell",
     "van-grid": "@vant/weapp/grid",
