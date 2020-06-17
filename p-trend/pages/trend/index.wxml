@@ -35,8 +35,8 @@
   <block wx:elif="{{ trendCategory == 'DIVIDEND' }}">
     <view class="full-width trend-type-part">
       <van-tabs catchchange="onTrendTypeChange" active="{{ trendType }}">
-        <van-tab title="股息率" name="DIVIDEND" />
-        <van-tab title="分红率" name="DIVIDEND_PROFIT" />
+        <van-tab title="股息率" name="DIVIDEND_YIELDS" />
+        <van-tab title="分红率" name="DIVIDEND_RATIO" />
       </van-tabs>
     </view>
   </block>
@@ -47,20 +47,21 @@
         <van-tab title="ROE" name="ROE" />
         <van-tab title="净利率" name="DPROFIT_MARGIN" />
         <van-tab title="年周转率" name="TURNOVER_RATE" />
-        <van-tab title="权益乘数" name="EM" />
+        <van-tab title="权益乘数" name="EQUITY_MULTIPLIER" />
       </van-tabs>
     </view>
   </block>
 
-  <view class="full-width trend-quarter-part" wx:if="{{ showQuarter }}">
-    <van-tabs catchchange="onTrendQuarterChange" active="{{ trendQuarter }}">
-      <van-tab title="按季" name="QUARTER" />
-      <van-tab title="按年" name="YEAR" />
+  <view class="full-width trend-period-part" wx:if="{{ showPeriodOptions }}">
+    <van-tabs catchchange="onTrendPeriodChange" active="{{ trendPeriod }}">
+      <van-tab title="期末" name="REPORT" />
+      <van-tab title="单季" name="QUARTER" />
+      <van-tab title="LTM" name="LTM" />
     </van-tabs>
   </view>
 
-  <view class="full-width trend-period-part">
-    <van-tabs catchchange="onTrendPeriodChange" type="card" active="{{ trendPeriodStr }}">
+  <view class="full-width trend-year-part">
+    <van-tabs catchchange="onTrendYearChange" type="card" active="{{ trendYearStr }}">
       <van-tab title="一年" name="1" />
       <van-tab title="三年" name="3" />
       <van-tab title="五年" name="5" />

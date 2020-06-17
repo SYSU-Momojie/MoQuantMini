@@ -8,9 +8,9 @@
           <van-tag type="primary" wx:if="{{ fromManual }}">人工导入</van-tag>
         </view>
       </van-cell>
-      <van-cell value="{{ f.unit(dprofit) }}">
+      <van-cell value="{{ f.unit(nprofit) }}">
         <view slot="title">
-          <view class="van-cell-text">扣非净利</view>
+          <view class="van-cell-text">净利</view>
           <van-tag type="danger" wx:if="{{ oneTime }}">不可持续</van-tag>
         </view>
       </van-cell>

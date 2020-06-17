@@ -39,6 +39,10 @@ Component({
       type: Number,
       value: 0
     },
+    nprofit: {
+      type: Number,
+      value: 0
+    },
     fromManual: {
       type: Boolean,
       value: false

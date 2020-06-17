@@ -27,7 +27,7 @@
 		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.11.1",
+	"libVersion": "2.11.2",
 	"appid": "wx0e49300c42139c4a",
 	"projectname": "MoQuantMini",
 	"debugOptions": {
@@ -64,7 +64,7 @@
 					"id": 0,
 					"name": "测试趋势",
 					"pathName": "p-trend/pages/trend/index",
-					"query": "tsCode=000001.SZ&t=REVENUE",
+					"query": "tsCode=000011.SZ&t=REVENUE",
 					"scene": null
 				},
 				{

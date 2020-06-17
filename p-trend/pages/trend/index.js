@@ -2,60 +2,58 @@
 
 import * as echarts from '../../components/ec-canvas/echarts';
 const api = require('../../../behaviors/api.js');
+const computedBehavior = require('miniprogram-computed');
 const format = require('../../../utils/format.js');
 
 const trendConst = {
   'PB': {
     'cat1': 'PBPE',
-    'yearQuarter': false
+    'periodList': []
   },
   'PE': {
     'cat1': 'PBPE',
-    'yearQuarter': false
+    'periodList': []
   },
   'REVENUE': {
     'cat1': 'GROWTH',
-    'yearQuarter': true
+    'periodList': ['REPORT', 'QUARTER', 'LTM']
   },
   'NPROFIT': {
     'cat1': 'GROWTH',
-    'yearQuarter': true
+    'periodList': ['REPORT', 'QUARTER', 'LTM']
   },
   'DPROFIT': {
     'cat1': 'GROWTH',
-    'yearQuarter': true
+    'periodList': ['REPORT', 'QUARTER', 'LTM']
   },
-  'DIVIDEND': {
+  'DIVIDEND_YIELDS': {
     'cat1': 'DIVIDEND',
-    'yearQuarter': false
+    'periodList': []
   },
-  'DIVIDEND_PROFIT': {
+  'DIVIDEND_RATIO': {
     'cat1': 'DIVIDEND',
-    'yearQuarter': false
+    'periodList': []
   },
   'ROE': {
     'cat1': 'DUPONT',
-    'yearQuarter': false
+    'periodList': []
   },
   'DPROFIT_MARGIN': {
     'cat1': 'DUPONT',
-    'yearQuarter': false
+    'periodList': []
   },
   'TURNOVER_RATE': {
     'cat1': 'DUPONT',
-    'yearQuarter': false
+    'periodList': []
   },
-  'EM': {
+  'EQUITY_MULTIPLIER': {
     'cat1': 'DUPONT',
-    'yearQuarter': false
+    'periodList': []
   },
 };
 
 Page({
-
-  behaviors: [
-    api
-  ],
+  behaviors: [computedBehavior, api],
 
   /**
    * 页面的初始数据
@@ -68,19 +66,29 @@ Page({
     lastTrendType: {
       'PBPE': 'PB',
       'GROWTH': 'REVENUE',
-      'DIVIDEND': 'DIVIDEND',
+      'DIVIDEND': 'DIVIDEND_YIELDS',
       'DUPONT': 'ROE',
     },
     showQuarter: false,
-    trendQuarter: 'QUARTER',
+    trendPeriod: 'QUARTER',
     ec: {
       lazyLoad: true
     },
     chartInit: false,
     chartDisposed: false,
     cacheData: {},
-    trendPeriod: 5,
-    trendPeriodStr: '5'
+    trendYear: 1,
+    trendYearStr: '1'
+  },
+
+  computed: {
+    showPeriodOptions: function(data) {
+      var trend = trendConst[data.trendType];
+      if (trend === null || trend === undefined) {
+        return false;
+      }
+      return trend.periodList.length > 0;
+    }
   },
 
   /**
@@ -98,30 +106,13 @@ Page({
     this.setData({
       tsCode: tsCode,
       trendCategory: trend.cat1,
-      trendType: trendType,
-      showQuarter: trend.yearQuarter,
-      cacheData: {
-        'PE': { x: [], vl1: [], vl2: [], c: false },
-        'PB': { x: [], vl1: [], vl2: [], c: false },
-        'REVENUE_YEAR': { x: [], vl1: [], vl2: [], c: false },
-        'REVENUE_QUARTER': { x: [], vl1: [], vl2: [], c: false },
-        'NPROFIT_YEAR': { x: [], vl1: [], vl2: [], c: false },
-        'NPROFIT_QUARTER': { x: [], vl1: [], vl2: [], c: false },
-        'DPROFIT_YEAR': { x: [], vl1: [], vl2: [], c: false },
-        'DPROFIT_QUARTER': { x: [], vl1: [], vl2: [], c: false },
-        'DIVIDEND': { x: [], vl1: [], vl2: [], c: false },
-        'DIVIDEND_PROFIT': { x: [], vl1: [], vl2: [], c: false },
-        'ROE': { x: [], vl1: [], vl2: [], c: false },
-        'DPROFIT_MARGIN': { x: [], vl1: [], vl2: [], c: false },
-        'TURNOVER_RATE': { x: [], vl1: [], vl2: [], c: false },
-        'EM': { x: [], vl1: [], vl2: [], c: false }
-      },
+      trendType: trendType
     });
   },
 
-  onTrendQuarterChange: function (event) {
+  onTrendPeriodChange: function (event) {
     this.setData({
-      trendQuarter: event.detail.name
+      trendPeriod: event.detail.name
     });
     if (this.data.chartInit) {
       this.requestData();
@@ -132,10 +123,18 @@ Page({
     var cat = event.detail.name;
     var trendType = this.data.lastTrendType[cat];
     var trend = trendConst[trendType];
+    var trendPeriod = '';
+    for (var i = 0 ; i < trend.periodList.length ; i++) {
+      if (i === 0 || trend.periodList[i] === this.data.trendPeriod) {
+        trendPeriod = trend.periodList[i];
+      }
+    }
+    
     this.setData({
       trendCategory: trend.cat1,
       trendType: trendType,
-      showQuarter: trend.yearQuarter
+      showQuarter: trend.isQuarter,
+      trendPeriod: trendPeriod
     });
     if (this.data.chartInit) {
       this.requestData();
@@ -150,7 +149,7 @@ Page({
     lastTrendType[trend.cat1] = trendType;
     this.setData({
       trendType: trendType,
-      showQuarter: trend.yearQuarter,
+      showQuarter: trend.isQuarter,
       lastTrendType: lastTrendType
     });
     if (this.data.chartInit) {
@@ -158,22 +157,14 @@ Page({
     }
   },
 
-  onTrendPeriodChange: function (event) {
+  onTrendYearChange: function (event) {
     this.setData({
-      trendPeriodStr: event.detail.name,
-      trendPeriod: parseInt(event.detail.name),
+      trendYearStr: event.detail.name,
+      trendYear: parseInt(event.detail.name),
     });
     if (this.data.chartInit) {
       this.requestData();
     }
-  },
-
-  needQuartOrYear: function (trendTab) {
-    if (trendTab === null || trendTab === undefined) {
-      trendTab = this.data.trendType;
-    }
-    var trend = trendConst[trendTab];
-    return trend.yearQuarter;
   },
 
   initChart: function () {
@@ -214,20 +205,27 @@ Page({
       return;
     }
 
-    if (this.data.cacheData[this.getRequestTrend()].c === true) {
-      this.updateChart(this.data.cacheData[this.getRequestTrend()]);
+    var name = this.getIndicatorName();
+    var cacheData = this.data.cacheData[name];
+    if (cacheData !== null && cacheData !== undefined && cacheData.c === true) {
+      this.updateChart(cacheData);
     } else {
+      
       var param = {
         tsCode: this.data.tsCode,
-        trendType: this.getRequestTrend(),
+        indicatorName: name.toLowerCase()
       };
 
       this.post('getTrendByCode', param, this.updateAfterRequest.bind(this));
     }
   },
 
-  getRequestTrend: function () {
-    return this.data.trendType + (this.needQuartOrYear() ? '_' + this.data.trendQuarter : '');
+  getIndicatorName: function () {
+    var indicatorName = this.data.trendType;
+    if (this.data.trendPeriod !== '' && this.data.trendPeriod !== 'REPORT') {
+      indicatorName = indicatorName + '_' + this.data.trendPeriod
+    }
+    return indicatorName;
   },
 
   updateAfterRequest: function (data) {
@@ -237,11 +235,12 @@ Page({
     }
     data.c = true;
     var cacheData = this.data.cacheData;
-    cacheData[this.getRequestTrend()] = data;
+    var name = this.getIndicatorName();
+    cacheData[name] = data;
     this.setData({
       cacheData
     });
-    this.updateChart(this.data.cacheData[this.getRequestTrend()]);
+    this.updateChart(this.data.cacheData[name]);
   },
 
   updateChart: function (data) {
@@ -251,8 +250,8 @@ Page({
     this.chart.setOption(options);
   },
 
-  getChartOption: function (data) {
-    var s = this.startIndex(data.x);
+  getChartOption: function (listToShow) {
+    var s = this.startIndex(listToShow.x);
     var yList = [];
     var series = [];
     var showX = false;
@@ -263,6 +262,9 @@ Page({
           name: this.data.trendType,
           position: 'left',
           axisLabel: {
+            formatter: function (value, index) {
+              return format.unit(value);
+            },
             fontSize: 10,
           }
         },
@@ -278,7 +280,7 @@ Page({
             opacity: 0
           },
           yAxis: 0,
-          data: format.truncArr(data.vl1.slice(s))
+          data: format.truncArr(listToShow.vl1.slice(s))
         },
         {
           name: '',
@@ -317,7 +319,7 @@ Page({
           name: this.convertTrendTypeToLabel(this.data.trendType),
           type: 'bar',
           yAxisIndex: 0,
-          data: data.vl1.slice(s)
+          data: listToShow.vl1.slice(s)
         },
         {
           name: '增速',
@@ -326,7 +328,7 @@ Page({
             opacity: 0
           },
           yAxisIndex: 1,
-          data: data.vl2.slice(s)
+          data: listToShow.vl2.slice(s)
         },
       ];
     } else if (trend.cat1 === 'DIVIDEND' || trend.cat1 === 'DUPONT') {
@@ -350,7 +352,7 @@ Page({
           name: this.convertTrendTypeToLabel(this.data.trendType),
           type: 'line',
           yAxisIndex: 0,
-          data: data.vl1.slice(s),
+          data: listToShow.vl1.slice(s),
           itemStyle: {
             opacity: 0
           },
@@ -384,7 +386,7 @@ Page({
       },
       xAxis: {
         type: 'category',
-        data: data.x.slice(s)
+        data: listToShow.x.slice(s)
       },
       yAxis: yList,
       series: series
@@ -424,9 +426,9 @@ Page({
       return '归母净利';
     } else if (trendType === 'DPROFIT') {
       return '扣非净利';
-    } else if (trendType === 'DIVIDEND') {
+    } else if (trendType === 'DIVIDEND_YIELDS') {
       return '股息率';
-    } else if (trendType === 'DIVIDEND_PROFIT') {
+    } else if (trendType === 'DIVIDEND_RATIO') {
       return '分红率';
     } else if (trendType === 'ROE') {
       return 'ROE';
@@ -434,18 +436,18 @@ Page({
       return '净利率';
     } else if (trendType === 'TURNOVER_RATE') {
       return '周转率';
-    } else if (trendType === 'EM') {
+    } else if (trendType === 'EQUITY_MULTIPLIER') {
       return '权益乘数';
     }
     return '错啦';
   },
 
   startIndex: function (x) {
-    if (this.data.trendPeriod === 0) {
+    if (this.data.trendYear === 0) {
       return 0;
     }
     var dStr = x[x.length - 1];
-    var year = parseInt(dStr.substr(0, 4)) - this.data.trendPeriod;
+    var year = parseInt(dStr.substr(0, 4)) - this.data.trendYear;
     var targetX = year + dStr.substr(4);
     for (var i = 0; i < x.length; i++) {
       if (x[i] >= targetX) {

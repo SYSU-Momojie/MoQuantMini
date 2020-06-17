@@ -5,7 +5,7 @@
   height: 500rpx;
 }
 
-.trend-period-part {
+.trend-year-part {
   margin-top: 20rpx;
 }
 
