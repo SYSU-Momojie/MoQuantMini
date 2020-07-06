@@ -1,0 +1,16 @@
+<view class="page-container">
+
+  <view class="full-width search-part">
+    <mq-share-search catchchooseShare="onShareChosen"/>
+  </view>
+
+
+  <view class="full-width input-part">
+    <van-cell-group>
+      <van-field value="{{ eventBrief }}" label="简述" type="textarea" autosize required />
+      <van-field value="{{ noetDetail }}" label="详述" type="textarea" autosize required />
+      <van-field value="{{ noetConclusion }}" label="结论" type="textarea" autosize required />
+    </van-cell-group>
+  </view>
+  
+</view>

@@ -62,6 +62,12 @@
       "pages": [
         "pages/detail/index"
       ]
+    },
+    {
+      "root": "p-manage",
+      "pages": [
+        "pages/note/index"
+      ]
     }
   ]
 }

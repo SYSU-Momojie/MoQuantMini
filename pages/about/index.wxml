@@ -25,5 +25,12 @@
       link-type="navigateTo"
       url="/pages/grid-buy/index"/>
   </van-cell-group>
+  <van-cell-group title="管理">
+    <van-cell
+      is-link
+      title="写日记"
+      link-type="navigateTo"
+      url="/p-manage/pages/note/index"/>
+  </van-cell-group>
   </view>
 </view>

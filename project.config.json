@@ -27,7 +27,7 @@
 		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.11.2",
+	"libVersion": "2.11.3",
 	"appid": "wx0e49300c42139c4a",
 	"projectname": "MoQuantMini",
 	"debugOptions": {
@@ -99,6 +99,13 @@
 					"id": -1,
 					"name": "网格买入",
 					"pathName": "pages/grid-buy/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "写日记",
+					"pathName": "p-manage/pages/note/index",
 					"query": "",
 					"scene": null
 				}
