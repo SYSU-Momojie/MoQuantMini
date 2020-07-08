@@ -12,7 +12,7 @@
 
   <view class="hint" wx:if="{{ hintList.length > 0 }}">
     <van-cell-group custom-class="hint-list">
-      <van-cell class="hint-item" wx:for="{{ hintList }}" wx:key="tsCode" wx:for-item="item" wx:for-index="idx" catchclick="handleTap" data-id="{{item.tsCode}}" title="{{ item.name }}" value="{{ item.tsCode }}"/>
+      <van-cell class="hint-item" wx:for="{{ hintList }}" wx:key="tsCode" wx:for-item="item" wx:for-index="idx" catchclick="handleTap" data-id="{{item.tsCode}}" title="{{ item.name }}" value="{{ item.tsCode }}" data-name="{{item.name}}"/>
     </van-cell-group>
   </view>
 </view>

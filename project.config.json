@@ -27,7 +27,7 @@
 		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.11.3",
+	"libVersion": "2.12.0",
 	"appid": "wx0e49300c42139c4a",
 	"projectname": "MoQuantMini",
 	"debugOptions": {

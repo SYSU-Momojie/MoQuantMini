@@ -4,13 +4,16 @@
     <mq-share-search catchchooseShare="onShareChosen"/>
   </view>
 
-
   <view class="full-width input-part">
     <van-cell-group>
       <van-field value="{{ eventBrief }}" label="简述" type="textarea" autosize required />
       <van-field value="{{ noetDetail }}" label="详述" type="textarea" autosize required />
       <van-field value="{{ noetConclusion }}" label="结论" type="textarea" autosize required />
     </van-cell-group>
+
+    <van-tag type="primary" round custom-class="share-item" wx:for="{{ shareList }}" wx:key="tsCode" wx:for-item="item" wx:for-index="idx" closeable bind:close="removeShare" data-code="{{item.tsCode}}">
+      {{ item.shareName }}
+    </van-tag>
   </view>
   
 </view>

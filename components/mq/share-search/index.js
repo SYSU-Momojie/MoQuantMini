@@ -96,6 +96,7 @@ Component({
       console.log(event);
       this.clearHint();
       var code = event.currentTarget.dataset.id;
+      var name = event.currentTarget.dataset.name;
       var latest = this.data.latest;
       var index = latest.indexOf(code);
       if (index > -1) {
@@ -113,7 +114,7 @@ Component({
         key: 'searchLatest',
         data: latest,
       });
-      this.triggerEvent('chooseShare', { tsCode: code });
+      this.triggerEvent('chooseShare', { tsCode: code, shareName: name });
     },
     updateAfterRequest: function (list) {
       this.setData({
