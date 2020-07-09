@@ -22,7 +22,7 @@
     </van-cell-group>
 
     <view class="button-part">
-      <van-button type="danger" wx:if="{{id != 0}}">删除</van-button>
+      <van-button type="danger" wx:if="{{id != 0}}" catchclick="deleteNote">删除</van-button>
       <van-button type="primary" catchclick="saveNote">保存</van-button>
     </view>
   </view>

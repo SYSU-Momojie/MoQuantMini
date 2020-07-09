@@ -100,7 +100,6 @@ Page({
   },
 
   afterSave: function(data) {
-    console.log(data);
     var opts = {
       selector: '#manage-note-toast',
       message: data.msg
@@ -121,5 +120,25 @@ Page({
     var data = {};
     data[e.currentTarget.dataset.name] = e.detail;
     this.setData(data);
+  },
+
+  deleteNote: function(e) {
+    if (this.data.id == 0) {
+      return ;
+    }
+    this.post('manage/deleteNote', this.data.id, this.afterDelete.bind(this));
+  },
+
+  afterDelete: function(data) {
+    var opts = {
+      selector: '#manage-note-toast',
+      message: data.msg
+    };
+    if (data.success === true) {
+      Toast.success(opts);
+      this.setData({id: 0});
+    } else {
+      Toast.fail(opts);
+    }
   }
 })

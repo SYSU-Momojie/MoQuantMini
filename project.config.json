@@ -106,7 +106,7 @@
 					"id": 6,
 					"name": "写日记",
 					"pathName": "p-manage/pages/note/index",
-					"query": "id=8",
+					"query": "id=9",
 					"scene": null
 				}
 			]
