@@ -103,10 +103,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 6,
 					"name": "写日记",
 					"pathName": "p-manage/pages/note/index",
-					"query": "",
+					"query": "id=8",
 					"scene": null
 				}
 			]

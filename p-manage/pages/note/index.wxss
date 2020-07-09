@@ -1,1 +1,6 @@
-/* p-manage/pages/note/index.wxss */
+.button-part {
+  margin-top: 12rpx;
+  display: flex;
+  flex-direction: row-reverse;
+  padding-right: 12rpx;
+}

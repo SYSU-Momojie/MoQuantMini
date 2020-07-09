@@ -1,19 +1,30 @@
 <view class="page-container">
 
+  <van-toast id="manage-note-toast" />
+  
   <view class="full-width search-part">
     <mq-share-search catchchooseShare="onShareChosen"/>
   </view>
 
   <view class="full-width input-part">
-    <van-cell-group>
-      <van-field value="{{ eventBrief }}" label="简述" type="textarea" autosize required />
-      <van-field value="{{ noetDetail }}" label="详述" type="textarea" autosize required />
-      <van-field value="{{ noetConclusion }}" label="结论" type="textarea" autosize required />
+    <van-cell-group title="日记内容">
+      <van-field value="{{ eventBrief }}" label="简述" type="textarea" autosize required catchchange="updateInput" data-name="eventBrief"/>
+      <van-field value="{{ noteDetail }}" label="详述" type="textarea" autosize catchchange="updateInput" data-name="noteDetail"/>
+      <van-field value="{{ noteConclusion }}" label="结论" type="textarea" autosize catchchange="updateInput" data-name="noteConclusion"/>
+      <van-cell>
+        <view slot="title">
+          <view class="van-cell-text">相关个股</view>
+          <van-tag type="primary" round custom-class="share-item" wx:for="{{ shareList }}" wx:key="tsCode" wx:for-item="item" wx:for-index="idx" closeable catchclose="removeShare" data-code="{{item.tsCode}}">
+        {{ item.shareName }}
+      </van-tag>
+        </view>
+      </van-cell>
     </van-cell-group>
 
-    <van-tag type="primary" round custom-class="share-item" wx:for="{{ shareList }}" wx:key="tsCode" wx:for-item="item" wx:for-index="idx" closeable bind:close="removeShare" data-code="{{item.tsCode}}">
-      {{ item.shareName }}
-    </van-tag>
+    <view class="button-part">
+      <van-button type="danger" wx:if="{{id != 0}}">删除</van-button>
+      <van-button type="primary" catchclick="saveNote">保存</van-button>
+    </view>
   </view>
   
 </view>

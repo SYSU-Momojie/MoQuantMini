@@ -3,7 +3,10 @@
   "usingComponents": {
     "mq-share-search": "/components/mq/share-search/index",
     "van-cell-group": "@vant/weapp/cell-group",
+    "van-cell": "@vant/weapp/cell",
     "van-field": "@vant/weapp/field",
-    "van-tag": "@vant/weapp/tag"
+    "van-tag": "@vant/weapp/tag",
+    "van-button": "@vant/weapp/button",
+    "van-toast": "@vant/weapp/toast"
   }
 }
